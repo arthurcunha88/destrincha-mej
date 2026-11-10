@@ -81,18 +81,28 @@ function setupSearch(searchId: string, categoryId: string, countId: string, list
 setupSearch('search', 'category', 'result-count', 'resources')
 const guideSearch = setupSearch('guide-search', 'guide-category', 'guide-count', 'guide-lessons')
 
-function openLinkedLesson() {
-  const target = document.getElementById(location.hash.slice(1))
-  if (!(target instanceof HTMLDetailsElement) || !target.classList.contains('lesson')) return
-  if (target.hidden && guideSearch) {
+function revealGuideTarget(hash: string) {
+  const target = document.getElementById(hash.slice(1))
+  if (!target) return
+  const lesson = target instanceof HTMLDetailsElement && target.classList.contains('lesson')
+  const area = target.classList.contains('guide-area')
+  const isFilteredOut = lesson && target.hidden || area && !target.querySelector('.lesson:not([hidden])')
+  if (isFilteredOut && guideSearch) {
     guideSearch.search.value = ''
     guideSearch.category.value = ''
     guideSearch.filter()
+    if (hash === location.hash) target.scrollIntoView()
   }
-  target.open = true
+  if (lesson) target.open = true
 }
-addEventListener('hashchange', openLinkedLesson)
-openLinkedLesson()
+
+for (const card of document.querySelectorAll<HTMLAnchorElement>('.reader-card')) {
+  card.addEventListener('click', event => {
+    if (!event.ctrlKey && !event.metaKey && !event.shiftKey && !event.altKey) revealGuideTarget(card.hash)
+  })
+}
+addEventListener('hashchange', () => revealGuideTarget(location.hash))
+revealGuideTarget(location.hash)
 
 const chapters = [...document.querySelectorAll<HTMLElement>('main > section[id]')]
 const milestones = [...document.querySelectorAll<HTMLElement>('[data-milestone]')]

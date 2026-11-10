@@ -52,7 +52,6 @@ h3{font:800 clamp(1.65rem,2.6vw,3.1rem)/1 Barlow,'Arial Narrow',Arial,sans-serif
 .hero::before{position:absolute;content:'';z-index:-1;inset:0 0 0 49%;background:#153eaa;clip-path:polygon(19% 0,100% 0,100% 100%,0 100%)}
 .hero-inner{display:grid;grid-template-columns:1fr 1fr;align-items:center;min-height:min(690px,calc(100svh - 124px));gap:clamp(1.8rem,4.3vw,5.3rem);padding-block:clamp(3.3rem,8vw,7.5rem) 3rem}
 .eyebrow{display:flex;gap:.65rem;align-items:center;font:800 .72rem/1.35 Arial,sans-serif;letter-spacing:.13em;text-transform:uppercase}
-.eyebrow span{display:inline-grid;place-items:center;padding:.28rem .47rem;border:1px solid currentColor;border-radius:4px;font-variant-numeric:tabular-nums;letter-spacing:.05em}
 .hero .eyebrow{color:var(--yellow);margin-bottom:1.2rem}
 .hero h1{font:800 clamp(3.75rem,7.5vw,8.2rem)/.87 Barlow,'Arial Narrow',Arial,sans-serif;letter-spacing:-.035em}
 .hero h1 span,.hero h1 em{display:block}
@@ -64,18 +63,29 @@ h3{font:800 clamp(1.65rem,2.6vw,3.1rem)/1 Barlow,'Arial Narrow',Arial,sans-serif
 .photo-frame::after{position:absolute;content:'';inset:12px -12px -12px 12px;z-index:-1;border:1px solid #ffffff7a;border-radius:4px;pointer-events:none}
 .hero-figure img{aspect-ratio:1.18;object-fit:cover;object-position:55% center;border-radius:3px}
 .hero-figure figcaption,.hero-bottom{font-size:.68rem;font-weight:800;letter-spacing:.095em;text-transform:uppercase}
-.hero-figure figcaption{display:flex;justify-content:space-between;gap:1rem;margin-top:1.3rem;color:#edf3ff}
+.hero-figure figcaption{text-align:end;margin-top:1.3rem;color:#edf3ff}
 .hero-bottom{display:flex;align-items:center;justify-content:space-between;padding:1rem 0;border-top:1px solid #ffffff4d;color:#e5ebfa}
 .hero-bottom a{text-decoration:none}
-.hero-bottom :is(b,a span){color:var(--yellow);margin-inline:.4rem}
-.reader-map{background:var(--yellow);color:var(--navy);padding:1.25rem 0}
-.reader-map ul{display:grid;grid-template-columns:repeat(3,1fr);margin-top:.65rem;list-style:none;padding:0}
-.reader-map li+li{border-inline-start:1px solid #101f3d55}
-.reader-map a{display:grid;grid-template-columns:auto 1fr auto;gap:.7rem;align-items:start;padding:.8rem 1rem;text-decoration:none}
-.reader-map a:hover{background:#fff4b2}
-.reader-map strong,.reader-map small{display:block}
-.reader-map small{font-size:.83rem;line-height:1.35}
-.path-index{font-size:.73rem;font-weight:800;line-height:2}
+.hero-bottom a span{color:var(--yellow);margin-inline:.4rem}
+.reader-map{padding-block:clamp(2.6rem,5vw,4.6rem);background:var(--panel);border-bottom:1px solid var(--line)}
+.reader-map-heading{display:flex;justify-content:space-between;align-items:end;gap:1rem 2rem;margin-bottom:1.45rem}
+.reader-map-heading .eyebrow{color:var(--accent);margin-bottom:.6rem}
+.reader-map-heading h2{max-width:18ch;font-size:clamp(2.75rem,5.1vw,5.25rem);text-wrap:initial}
+.reader-feature{display:inline-flex;align-items:center;gap:.6rem;color:var(--accent);font-size:.88rem;font-weight:800;padding:.35rem 0}
+.reader-cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.75rem;padding:0;list-style:none}
+.reader-card{position:relative;display:flex;flex-direction:column;gap:.6rem;height:100%;padding:clamp(.95rem,1.9vw,1.55rem);background:var(--bg);border:1px solid var(--line);border-top:3px solid var(--accent);border-radius:0 0 6px 6px;text-decoration:none;transition:border-color .22s,background-color .22s,transform .24s var(--ease)}
+.reader-card-top{display:flex;justify-content:space-between;align-items:center;color:var(--accent);margin-bottom:.3rem}
+.reader-card-top svg{flex-shrink:0;transition:transform .35s var(--ease)}
+.reader-card-arrow{display:grid;place-items:center;width:2rem;height:2rem;border-radius:50%;background:var(--yellow);color:var(--navy);font-weight:800;transition:transform .24s var(--ease)}
+.reader-card h3{font-size:clamp(1.7rem,2.4vw,2.65rem)}
+.reader-card p{font-size:.92rem;line-height:1.48;color:var(--muted);margin-bottom:.35rem}
+.reader-card small{display:block;margin-top:auto;padding-top:.65rem;border-top:1px solid var(--line);color:var(--accent);font-size:.77rem;font-weight:700;line-height:1.35}
+.reader-card:is(:hover,:focus-visible,:active){border-top-color:#b47c00}
+.reader-card:is(:hover,:focus-visible) .reader-card-arrow{transform:translateY(4px)}
+@media(hover:hover) and (prefers-reduced-motion:no-preference){
+  .reader-card:hover{transform:translateY(-4px)}
+  .reader-card:hover svg{transform:translateX(3px)}
+}
 .hero-copy > *{animation:enter .65s var(--ease) both}
 .hero-copy h1{animation-delay:70ms}
 .hero-copy .hero-intro{animation-delay:140ms}
@@ -100,22 +110,20 @@ h3{font:800 clamp(1.65rem,2.6vw,3.1rem)/1 Barlow,'Arial Narrow',Arial,sans-serif
 .milestones a,.organizations a,.values a,.network figcaption a{color:var(--accent);font-weight:700;font-size:.84rem}
 
 .foundation{background:#153eaa;color:white}
-.foundation .eyebrow,.foundation .glyph,.foundation .values a{color:var(--yellow)}
+.foundation .eyebrow,.foundation .values a{color:var(--yellow)}
 .foundation h2{max-width:17ch}
 .purpose{max-width:60ch;margin-top:1rem;color:#eef3ff;font-size:1.1rem}
 .foundation-grid{display:grid;grid-template-columns:1fr 1fr 1.12fr;gap:1px;background:#ffffff61;border:1px solid #ffffff61;margin-top:2.7rem}
 .foundation-grid article{background:#153eaa;padding:clamp(1.15rem,2.5vw,2.6rem)}
 .foundation-grid article:last-child{background:#101f3d}
 .foundation-grid p{margin-top:.7rem;color:#eef3ff}
-.glyph{display:block;font:800 2.5rem/1 Arial,sans-serif;margin-bottom:1.3rem}
 .values ul{padding:0;list-style:none;margin:.7rem 0}
 .values li{padding:.28rem 0;border-bottom:1px solid #ffffff4d}
 .practice{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(1.5rem,6vw,7.5rem);align-items:start}
 .practice h2{font-size:clamp(3rem,5.5vw,6.8rem)}
-.practice ol{list-style:none;padding:0;border-top:1px solid var(--line)}
-.practice li{display:flex;gap:1rem;padding:1.2rem 0;border-bottom:1px solid var(--line)}
+.practice ul{list-style:none;padding:0;border-top:1px solid var(--line)}
+.practice li{padding:1.2rem 0;border-bottom:1px solid var(--line)}
 .practice li p{margin-bottom:0}
-.chapter-number{align-self:start;padding:.18rem .44rem;background:var(--yellow);color:var(--navy);font-weight:800;border-radius:4px}
 
 .field-guide{padding-top:0}
 .lesson-list{border-top:1px solid var(--line)}
@@ -123,13 +131,13 @@ h3{font:800 clamp(1.65rem,2.6vw,3.1rem)/1 Barlow,'Arial Narrow',Arial,sans-serif
 .guide-area+.guide-area{margin-top:1.75rem}
 .guide-area h3.eyebrow{margin:1rem 0 0}
 .lesson{border-bottom:1px solid var(--line)}
-.lesson summary{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:clamp(.7rem,2vw,1.5rem);padding:1.05rem .3rem;list-style:none}
+.lesson summary{display:grid;grid-template-columns:1fr auto;align-items:center;gap:clamp(.7rem,2vw,1.5rem);padding:1.05rem .3rem;list-style:none}
 .lesson summary::-webkit-details-marker{display:none}
-.lesson summary > span:nth-child(2){font:800 clamp(1.6rem,3vw,2.75rem)/1 Barlow,Arial,sans-serif}
+.lesson summary > span{font:800 clamp(1.6rem,3vw,2.75rem)/1 Barlow,Arial,sans-serif}
 .lesson summary::after{content:'+';color:var(--accent);font-size:1.5rem;font-weight:700}
 .lesson[open] summary::after{content:'−'}
 .lesson summary:hover{color:var(--accent)}
-.lesson-body{display:grid;grid-template-columns:1.15fr 1fr;gap:1rem 2rem;padding:0 .3rem 1.5rem 3.6rem;animation:enter .32s var(--ease) both}
+.lesson-body{display:grid;grid-template-columns:1.15fr 1fr;gap:1rem 2rem;padding:0 .3rem 1.5rem;animation:enter .32s var(--ease) both}
 .lesson-body>p{color:var(--muted)}
 .lesson-body aside{background:var(--panel);border-inline-start:4px solid var(--yellow);padding:.7rem 1rem}
 .lesson-body a,.event-list a{color:var(--accent);font-weight:700;font-size:.84rem}
@@ -229,11 +237,13 @@ h3{font:800 clamp(1.65rem,2.6vw,3.1rem)/1 Barlow,'Arial Narrow',Arial,sans-serif
 @keyframes fade-in{from{opacity:0}}
 @supports(animation-timeline:view()){
   @media(prefers-reduced-motion:no-preference){
-    .section-heading,.practice li,.network figure,.foundation-grid{animation:rise linear both;animation-timeline:view();animation-range:entry 0% entry 60%}
+    .section-heading,.practice li,.network figure,.foundation-grid,.reader-cards>li{animation:rise linear both;animation-timeline:view();animation-range:entry 0% entry 60%}
+    .reader-cards>li:nth-child(even){animation-range:entry 8% entry 70%}
     @keyframes rise{from{transform:translateY(16px);opacity:.77}to{transform:none;opacity:1}}
   }
 }
 @media(max-width:1050px){
+  .reader-cards{grid-template-columns:repeat(2,minmax(0,1fr))}
   .frame,.nav-shell{width:calc(100% - 64px)}
   .hero h1{font-size:clamp(3.4rem,8.5vw,6rem)}
   .organizations{grid-template-columns:repeat(2,1fr)}
@@ -269,11 +279,15 @@ h3{font:800 clamp(1.65rem,2.6vw,3.1rem)/1 Barlow,'Arial Narrow',Arial,sans-serif
   .foundation-grid .values{grid-column:1/-1}
   .resources{grid-template-columns:repeat(2,minmax(0,1fr))}
   .lesson-body{grid-template-columns:1fr;padding-inline:.3rem}
-  .reader-map ul{grid-template-columns:1fr}
-  .reader-map li+li{border-inline-start:0;border-top:1px solid #101f3d55}
-  .reader-map a{padding-inline:0}
 }
 @media(max-width:540px){
+  .reader-map-heading{display:grid;gap:.5rem}
+  .reader-cards{grid-template-columns:1fr}
+  .reader-card{gap:.45rem}
+  .reader-card-top{position:absolute;inset:.8rem .95rem auto}
+  .reader-card-top svg{width:32px;height:32px}
+  .reader-card h3{min-height:2rem;padding-inline:2.55rem;align-content:center}
+  .reader-card p{margin-bottom:0}
   .event-list,.photo-grid,.photo-grid.coverage-photos{grid-template-columns:1fr}
   .photo-grid figure:first-child{grid-column:auto}
   .coverage-photos figure:nth-child(4){grid-column:auto}
@@ -292,5 +306,5 @@ h3{font:800 clamp(1.65rem,2.6vw,3.1rem)/1 Barlow,'Arial Narrow',Arial,sans-serif
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}
   ::view-transition-old(root),::view-transition-new(root){animation:none}
-  .button:hover,.photo-link:hover img{transform:none}
+  .button:hover,.photo-link:hover img,.reader-card:is(:hover,:focus-visible) .reader-card-arrow{transform:none}
 }

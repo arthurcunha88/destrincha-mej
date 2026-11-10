@@ -9,6 +9,25 @@ export const guideTopics = {
   management: ['Gestão da EJ', 'Managing a Junior Enterprise', 'Gestion d’une Junior-Entreprise', 'Gestión de la empresa júnior'],
 } satisfies Record<string, Translation>
 
+export const guidePreviews = {
+  movement: {
+    body: ['Uma EJ executa projetos. Núcleos, federações e a Brasil Júnior conectam e desenvolvem a Rede. Entenda o papel de cada um e como uma EJ começa.', 'A Junior Enterprise delivers projects. Hubs, federations and Brasil Júnior connect and develop the network. See what each does and how a team gets started.', 'Une Junior-Entreprise réalise des projets. Les pôles, les fédérations et Brasil Júnior relient et développent le réseau. Découvre leur rôle et comment créer une équipe.', 'Una empresa júnior ejecuta proyectos. Núcleos, federaciones y Brasil Júnior conectan y desarrollan la red. Descubre qué hace cada uno y cómo nace un equipo.'],
+    example: ['Instâncias, fundação e federação', 'Network bodies, founding and affiliation', 'Instances, création et affiliation', 'Instancias, fundación y afiliación'],
+  },
+  metrics: {
+    body: ['CSAT mede a satisfação do cliente. O cluster agrupa EJs por maturidade usando o CSAT e outros dados. Veja como interpretar os números e agir a partir deles.', 'CSAT measures customer satisfaction. Clusters group teams by maturity using CSAT and other data. Learn how to read the numbers and act on them.', 'Le CSAT mesure la satisfaction des clients. Les clusters regroupent les équipes par maturité à partir du CSAT et d’autres données. Apprends à interpréter ces chiffres et à agir.', 'El CSAT mide la satisfacción del cliente. Los clústeres agrupan equipos por madurez mediante el CSAT y otros datos. Aprende a interpretar las cifras y actuar con ellas.'],
+    example: ['CSAT, clusters e faturamento colaborativo', 'CSAT, clusters and collaborative revenue', 'CSAT, clusters et chiffre d’affaires collaboratif', 'CSAT, clústeres y facturación colaborativa'],
+  },
+  portal: {
+    body: ['O Portal BJ reúne resultados, registros e ferramentas da Rede. Saiba onde consultar dados e como organizar documentos para comprovar o que sua EJ declarou.', 'The BJ Portal brings together network results, records and tools. Find out where to look up data and how to organize evidence for what your team reports.', 'Le portail BJ centralise les résultats, les données et les outils du réseau. Découvre où consulter les données et comment préparer les justificatifs de ton équipe.', 'El Portal BJ reúne resultados, registros y herramientas de la red. Aprende dónde consultar los datos y cómo preparar evidencias de lo que declara tu equipo.'],
+    example: ['Selo EJ, evidências e Kit Tudão', 'Selo EJ, evidence and Kit Tudão', 'Selo EJ, justificatifs et Kit Tudão', 'Selo EJ, evidencias y Kit Tudão'],
+  },
+  management: {
+    body: ['Da proposta à entrega, alguém precisa decidir, executar e registrar. Veja como combinar responsabilidades e passar processos para a próxima gestão.', 'From proposal to delivery, someone needs to decide, do the work and keep a record. Learn how to assign responsibilities and hand processes over to the next team.', 'De l’offre à la livraison, il faut décider, agir et garder une trace. Apprends à répartir les responsabilités et à transmettre les processus à l’équipe suivante.', 'De la propuesta a la entrega, alguien debe decidir, ejecutar y registrar. Aprende a repartir responsabilidades y a transferir procesos al siguiente equipo.'],
+    example: ['Projetos, governança e sucessão', 'Projects, governance and handover', 'Projets, gouvernance et passation', 'Proyectos, gobernanza y relevo'],
+  },
+} satisfies Record<keyof typeof guideTopics, { body: Translation; example: Translation }>
+
 export type Lesson = Entry & {
   id: string
   topic: keyof typeof guideTopics
@@ -28,6 +47,9 @@ export const guideCopy = {
   category: ['Área de conhecimento', 'Knowledge area', 'Domaine', 'Área de conocimiento'],
   found: ['Capítulos encontrados', 'Chapters found', 'Chapitres trouvés', 'Capítulos encontrados'],
   empty: ['Nenhum capítulo encontrado.', 'No chapters found.', 'Aucun chapitre trouvé.', 'No se encontraron capítulos.'],
+  map: ['Por onde começar', 'Where to begin', 'Par où commencer', 'Por dónde empezar'],
+  mapTitle: ['O MEJ em quatro áreas.', 'Four ways into the movement.', 'Quatre portes d’entrée dans le mouvement.', 'Cuatro maneras de explorar el movimiento.'],
+  mapEvent: ['Ver a cobertura do ENEJ 2026', 'Explore ENEJ 2026 coverage', 'Découvrir la couverture de l’ENEJ 2026', 'Ver la cobertura del ENEJ 2026'],
 } satisfies Record<string, Translation>
 
 export const guideUrls = {

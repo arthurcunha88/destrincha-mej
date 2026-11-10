@@ -8,17 +8,7 @@ export const coverageCopy = {
   itinerary: ['Como viver um ENEJ', 'How to make the most of ENEJ', 'Comment vivre un ENEJ', 'Cómo aprovechar un ENEJ'],
   stories: ['O que o palco reconhece', 'What the stage recognizes', 'Ce que la scène récompense', 'Lo que reconoce el escenario'],
   other: ['Outros encontros da Rede', 'Other network gatherings', 'Autres rencontres du réseau', 'Otros encuentros de la red'],
-  map: ['Por onde começar', 'Where to begin', 'Par où commencer', 'Por dónde empezar'],
 } satisfies Record<string, Translation>
-
-export const readingPaths = [
-  { href: '#guia-instancias', title: ['Entenda a Rede', 'Understand the network', 'Comprendre le réseau', 'Entiende la red'],
-    body: ['Quem faz o quê, da EJ à Brasil Júnior.', 'Who does what, from the local team to Brasil Júnior.', 'Qui fait quoi, de l’équipe locale à Brasil Júnior.', 'Quién hace qué, del equipo local a Brasil Júnior.'] },
-  { href: '#guia-cluster', title: ['Leia seus indicadores', 'Read your metrics', 'Lire tes indicateurs', 'Lee tus indicadores'],
-    body: ['Cluster, CSAT e decisões para a próxima reunião.', 'Clusters, CSAT and decisions for your next meeting.', 'Clusters, CSAT et décisions pour la prochaine réunion.', 'Clústeres, CSAT y decisiones para tu próxima reunión.'] },
-  { href: '#enej-2026', title: ['Entre no ENEJ 2026', 'Step inside ENEJ 2026', 'Découvrir l’ENEJ 2026', 'Entra en el ENEJ 2026'],
-    body: ['Registros de Belo Horizonte e histórias de quem subiu ao palco.', 'Photos from Belo Horizonte and stories of the teams recognized on stage.', 'Photos de Belo Horizonte et histoires des équipes distinguées.', 'Fotos de Belo Horizonte e historias de los equipos reconocidos.'] },
-] satisfies (Entry & { href: string })[]
 
 export const visitPlan: Entry[] = [
   { title: ['Antes · leve uma pergunta', 'Before · bring a question', 'Avant · prépare une question', 'Antes · lleva una pregunta'],

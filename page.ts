@@ -1,15 +1,21 @@
 import { copy, languages, languageNames, languageTags, localize, milestones, organizations, pillars, urls, values } from './content.ts'
 import type { Language } from './content.ts'
 import { resources, topics } from './resources.ts'
-import { guideCopy, guideTopics, guideUrls, lessons } from './field-guide.ts'
+import { guideCopy, guidePreviews, guideTopics, guideUrls, lessons } from './field-guide.ts'
 import { enejPhotos, eventCopy, events, eventPhotos, photoFiles } from './events.ts'
-import { coverageCopy, readingPaths, stageStories, visitPlan } from './coverage.ts'
+import { coverageCopy, stageStories, visitPlan } from './coverage.ts'
 import { benchmarks, operations, referenceCopy } from './operations.ts'
 
 export const localePath = (locale: Language) => locale === 'pt' ? '/' : '/' + locale + '/'
 const escape = (value: string) => value.replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[char] ?? char)
 const arrow = '<span aria-hidden="true">↗</span>'
 const themeInit = "try{const t=localStorage.getItem('dmej-theme');if(t==='dark'||t==='light')document.documentElement.dataset.theme=t}catch{}"
+const topicMarks = {
+  movement: '<path d="M9 21 21 9l12 12-12 12Z"/><circle cx="21" cy="9" r="3"/><circle cx="9" cy="21" r="3"/><circle cx="33" cy="21" r="3"/><circle cx="21" cy="33" r="3"/>',
+  metrics: '<path d="M7 8v26h29M12 28l8-9 7 3 9-12"/><circle cx="20" cy="19" r="2"/><circle cx="27" cy="22" r="2"/><circle cx="36" cy="10" r="2"/>',
+  portal: '<rect x="10" y="5" width="22" height="32" rx="3"/><path d="M15 13h12m-12 6h12m-12 8 3 3 6-6"/>',
+  management: '<rect x="5" y="7" width="12" height="10" rx="2"/><rect x="25" y="25" width="12" height="10" rx="2"/><path d="M17 12h9a5 5 0 0 1 5 5v8m-4-4 4 4 4-4M5 29h12m-12 5h8"/>',
+}
 
 export function render(locale: Language) {
   const t = (key: keyof typeof copy) => escape(localize(locale, copy[key]))
@@ -20,14 +26,14 @@ export function render(locale: Language) {
     ['rede', t('network')], ['eventos', tr(eventCopy.nav)], ['acervo', t('library')],
   ]
   const navigation = chapters.map(([id, name]) => `<a href="#${id}">${name}</a>`).join('')
-  const label = (index: string, title: string) => `<p class="eyebrow"><span>${index}</span> ${title}</p>`
+  const label = (title: string) => `<p class="eyebrow">${title}</p>`
   const brand = `<a class="brand" href="#inicio" aria-label="DMEJ — Destrincha MEJ"><img src="/mark.svg" width="42" height="42" alt=""><span>DMEJ<small>DESTRINCHA MEJ</small></span></a>`
   const creditLink = (url: string, name: string) => `<a href="${escape(url)}">${name} ${arrow}</a>`
   const languageLinks = languages.map(code => `<a href="${localePath(code)}" lang="${languageTags[code]}" hreflang="${languageTags[code]}"${code === locale ? ' aria-current="page"' : ''}>${languageNames[code]}</a>`).join('')
   const bahia = eventPhotos[0]
   const bahiaFiles = photoFiles(bahia)
   const guide = [...lessons, ...operations]
-  const guideAreas = Object.entries(guideTopics)
+  const guideAreas = (Object.keys(guideTopics) as (keyof typeof guideTopics)[]).map(id => [id, guideTopics[id]] as const)
   const renderPhotos = (photos: typeof eventPhotos, wideIndexes = [0]) => photos.map((photo, index) => {
     const files = photoFiles(photo)
     const sizes = wideIndexes.includes(index) ? '(max-width: 900px) 92vw, 64vw' : '(max-width: 540px) 92vw, (max-width: 900px) 45vw, 30vw'
@@ -79,7 +85,7 @@ ${languages.map(code => `<link rel="alternate" hreflang="${languageTags[code]}" 
   <section class="hero" id="inicio">
     <div class="hero-inner frame">
       <div class="hero-copy">
-        ${label('↗', t('heroLabel'))}
+        ${label(t('heroLabel'))}
         <h1><span>${t('heroFirst')}</span><em>${t('heroLast')}</em></h1>
         <p class="hero-intro">${t('intro')}</p>
         <a class="button" href="#historia">${t('start')} <span aria-hidden="true">↓</span></a>
@@ -88,24 +94,35 @@ ${languages.map(code => `<link rel="alternate" hreflang="${languageTags[code]}" 
         <div class="photo-frame">
           <img src="/media/team-1440.jpg" srcset="/media/team-680.jpg 680w, /media/team-1440.jpg 1440w" sizes="(max-width: 820px) 92vw, 50vw" width="1440" height="810" fetchpriority="high" alt="${t('heroAlt')}">
         </div>
-        <figcaption><span>01 / DMEJ</span><a href="#creditos-imagens">${t('documentary')} ${arrow}</a></figcaption>
+        <figcaption><a href="#creditos-imagens">${t('documentary')} ${arrow}</a></figcaption>
       </figure>
     </div>
-    <div class="hero-bottom frame"><a href="#historia"><span aria-hidden="true">↓</span> ${t('scroll')}</a><span>BRASIL / BAHIA <b>✳</b></span></div>
+    <div class="hero-bottom frame"><a href="#historia"><span aria-hidden="true">↓</span> ${t('scroll')}</a><span>BRASIL / BAHIA</span></div>
   </section>
 
-  <nav class="reader-map" aria-label="${tr(coverageCopy.map)}">
+  <nav class="reader-map" aria-labelledby="reader-map-title">
     <div class="frame">
-      <p class="eyebrow">${tr(coverageCopy.map)}</p>
-      <ul>
-        ${readingPaths.map((path, index) => `<li><a href="${path.href}"><span class="path-index">0${index + 1}</span><span><strong>${tr(path.title)}</strong><small>${tr(path.body)}</small></span>${arrow}</a></li>`).join('')}
+      <div class="reader-map-heading">
+        <div>${label(tr(guideCopy.map))}<h2 id="reader-map-title">${tr(guideCopy.mapTitle)}</h2></div>
+        <a class="reader-feature" href="#enej-2026">${tr(guideCopy.mapEvent)} ${arrow}</a>
+      </div>
+      <ul class="reader-cards">
+        ${guideAreas.map(([id, name]) => {
+          const preview = guidePreviews[id]
+          return `<li><a class="reader-card" href="#area-${id}">
+            <div class="reader-card-top"><svg viewBox="0 0 42 42" width="42" height="42" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${topicMarks[id]}</svg><span class="reader-card-arrow" aria-hidden="true">↓</span></div>
+            <h3>${tr(name)}</h3>
+            <p>${tr(preview.body)}</p>
+            <small>${tr(preview.example)}</small>
+          </a></li>`
+        }).join('')}
       </ul>
     </div>
   </nav>
 
   <section id="historia" class="section frame">
     <div class="section-heading">
-      <div>${label('01', t('history'))}<h2>${t('historyTitle')}</h2></div>
+      <div>${label(t('history'))}<h2>${t('historyTitle')}</h2></div>
       <p>${t('historyIntro')}</p>
     </div>
     <div class="timeline">
@@ -120,26 +137,26 @@ ${languages.map(code => `<link rel="alternate" hreflang="${languageTags[code]}" 
 
   <section id="fundamentos" class="foundation section">
     <div class="frame">
-      ${label('02', t('foundations'))}
+      ${label(t('foundations'))}
       <h2>${t('foundationTitle')}</h2><p class="purpose">${t('purpose')}</p>
       <div class="foundation-grid">
-        <article><span class="glyph" aria-hidden="true">↗</span><h3>${t('mission')}</h3><p>${t('missionBody')}</p></article>
-        <article><span class="glyph" aria-hidden="true">✳</span><h3>${t('vision')}</h3><p>${t('visionBody')}</p></article>
+        <article><h3>${t('mission')}</h3><p>${t('missionBody')}</p></article>
+        <article><h3>${t('vision')}</h3><p>${t('visionBody')}</p></article>
         <article class="values"><h3>${t('values')}</h3><ul>${values.map(value => `<li>${tr(value)}</li>`).join('')}</ul>${creditLink(urls.movement, 'Brasil Júnior')}</article>
       </div>
     </div>
   </section>
 
   <section class="section frame practice">
-    <div>${label('02 / A', t('practice'))}<h2>${t('practiceTitle')}</h2></div>
-    <ol>
-      ${pillars.map((item, i) => `<li><span class="chapter-number">0${i + 1}</span><div><h3>${tr(item.title)}</h3><p>${tr(item.body)}</p></div></li>`).join('')}
-    </ol>
+    <div>${label(t('practice'))}<h2>${t('practiceTitle')}</h2></div>
+    <ul>
+      ${pillars.map(item => `<li><h3>${tr(item.title)}</h3><p>${tr(item.body)}</p></li>`).join('')}
+    </ul>
   </section>
 
   <section id="guia" class="section frame field-guide">
     <div class="section-heading">
-      <div>${label('03', tr(guideCopy.nav))}<h2>${tr(guideCopy.title)}</h2></div>
+      <div>${label(tr(guideCopy.nav))}<h2>${tr(guideCopy.title)}</h2></div>
       <p>${tr(guideCopy.intro)}</p>
     </div>
     <div class="filters" hidden>
@@ -148,10 +165,10 @@ ${languages.map(code => `<link rel="alternate" hreflang="${languageTags[code]}" 
     </div>
     <p id="guide-count" class="result-count" role="status" data-label="${tr(guideCopy.found)}" data-empty="${tr(guideCopy.empty)}"></p>
     <div class="lesson-list" id="guide-lessons">
-      ${guideAreas.map(([id, name], area) => `<div class="guide-area">
-        <h3 class="eyebrow"><span>${String(area + 1).padStart(2, '0')}</span> ${tr(name)}</h3>
+      ${guideAreas.map(([id, name], area) => `<div class="guide-area" id="area-${id}" tabindex="-1">
+        <h3 class="eyebrow">${tr(name)}</h3>
         ${guide.filter(lesson => lesson.topic === id).map((lesson, i) => `<details id="guia-${lesson.id}" class="lesson" data-topic="${id}" data-search="${tr(lesson.title)} ${tr(lesson.body)} ${tr(lesson.example)} ${tr(name)}"${area === 0 && i === 0 ? ' open' : ''}>
-          <summary><span class="chapter-number">${String(i + 1).padStart(2, '0')}</span><span>${tr(lesson.title)}</span></summary>
+          <summary><span>${tr(lesson.title)}</span></summary>
           <div class="lesson-body">
             <p>${tr(lesson.body)}</p>
             <aside><strong>${tr(guideCopy.apply)}</strong><p>${tr(lesson.example)}</p></aside>
@@ -166,14 +183,14 @@ ${languages.map(code => `<link rel="alternate" hreflang="${languageTags[code]}" 
   <section id="rede" class="network section">
     <div class="frame">
       <div class="network-top">
-        <div>${label('04', t('network'))}<h2>${t('networkTitle')}</h2><p>${t('networkIntro')}</p></div>
+        <div>${label(t('network'))}<h2>${t('networkTitle')}</h2><p>${t('networkIntro')}</p></div>
         <figure>
           <img src="${bahiaFiles.src}" srcset="${bahiaFiles.srcset}" sizes="(max-width: 820px) 92vw, 45vw" width="${bahia.width}" height="${bahia.height}" loading="lazy" decoding="async" alt="${tr(bahia.alt)}">
           <figcaption>${escape(bahia.title)} · ${tr(bahia.alt)}</figcaption>
         </figure>
       </div>
       <div class="organizations">
-        ${organizations.map((org, i) => `<article><p class="eyebrow"><span>0${i + 1}</span> ${tr(org.title)}</p><h3>${org.name}</h3><p>${tr(org.body)}</p>${creditLink(org.url!, org.name)}</article>`).join('')}
+        ${organizations.map(org => `<article><p class="eyebrow">${tr(org.title)}</p><h3>${org.name}</h3><p>${tr(org.body)}</p>${creditLink(org.url!, org.name)}</article>`).join('')}
       </div>
       <div id="referencias" class="national-references">
         <h3>${tr(referenceCopy.title)}</h3><p>${tr(referenceCopy.intro)}</p>
@@ -187,12 +204,12 @@ ${languages.map(code => `<link rel="alternate" hreflang="${languageTags[code]}" 
   <section id="eventos" class="section event-chapter">
     <div class="frame">
       <div class="section-heading">
-        <div>${label('05', tr(eventCopy.nav))}<h2>${tr(eventCopy.title)}</h2></div>
+        <div>${label(tr(eventCopy.nav))}<h2>${tr(eventCopy.title)}</h2></div>
         <p>${tr(eventCopy.intro)}</p>
       </div>
       <section id="enej-2026" class="coverage">
         <div class="coverage-heading">
-          <div>${label('BH', 'ENEJ 2026')}<h3>${tr(coverageCopy.title)}</h3></div>
+          <div>${label('ENEJ 2026')}<h3>${tr(coverageCopy.title)}</h3></div>
           <div><p>${tr(coverageCopy.intro)}</p><a class="button" href="#fotos-enej-2026">${tr(coverageCopy.album)} <span aria-hidden="true">↓</span></a></div>
         </div>
         <div class="photo-grid coverage-photos" id="fotos-enej-2026" data-photo-group>
@@ -232,7 +249,7 @@ ${languages.map(code => `<link rel="alternate" hreflang="${languageTags[code]}" 
 
   <section id="acervo" class="section frame">
     <div class="section-heading">
-      <div>${label('06', t('library'))}<h2>${t('libraryTitle')}</h2></div>
+      <div>${label(t('library'))}<h2>${t('libraryTitle')}</h2></div>
       <p>${t('libraryIntro')}</p>
     </div>
     <div class="filters" hidden>
@@ -241,8 +258,8 @@ ${languages.map(code => `<link rel="alternate" hreflang="${languageTags[code]}" 
     </div>
     <p id="result-count" class="result-count" role="status" data-label="${t('count')}" data-empty="${t('none')}"></p>
     <div class="resources" id="resources">
-      ${resources.map((resource, i) => `<article data-topic="${resource.topic}" data-search="${tr(resource.title)} ${tr(resource.body)} ${escape(resource.credit)} ${tr(topics[resource.topic])}">
-        <p class="eyebrow"><span>${String(i + 1).padStart(2, '0')}</span> ${tr(topics[resource.topic])}</p>
+      ${resources.map(resource => `<article data-topic="${resource.topic}" data-search="${tr(resource.title)} ${tr(resource.body)} ${escape(resource.credit)} ${tr(topics[resource.topic])}">
+        <p class="eyebrow">${tr(topics[resource.topic])}</p>
         <h3>${tr(resource.title)}</h3><p>${tr(resource.body)}</p>
         <div class="resource-credit">${escape(resource.credit)}${resource.url ? ' · ' + t('external') : ''}</div>
         ${resource.url ? `<a class="resource-action" href="${escape(resource.url)}">${t('open')} ${arrow}</a>` : `<details class="exercise"><summary>${t('exercise')}</summary><ol>${resource.steps?.map(step => `<li>${tr(step)}</li>`).join('')}</ol></details>`}
@@ -273,7 +290,7 @@ ${languages.map(code => `<link rel="alternate" hreflang="${languageTags[code]}" 
     <details class="photo-credits" id="creditos-imagens" open>
       <summary>${tr(eventCopy.photoCredits)}</summary>
       <ul>
-        <li>${creditLink(urls.photoTeam, t('documentary') + ' · Brasil Júnior / DMEJ 01')}</li>
+        <li>${creditLink(urls.photoTeam, t('documentary') + ' · Brasil Júnior')}</li>
         ${[...enejPhotos, ...eventPhotos].map(photo => `<li>${creditLink(photo.url, escape(photo.title + ' · ' + photo.credit))}</li>`).join('')}
       </ul>
     </details>
