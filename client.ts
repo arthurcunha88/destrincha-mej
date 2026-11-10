@@ -50,14 +50,16 @@ const syncLanguageLinks = () => {
 addEventListener('hashchange', syncLanguageLinks)
 syncLanguageLinks()
 
-const search = document.querySelector<HTMLInputElement>('#search')
-const category = document.querySelector<HTMLSelectElement>('#category')
-const count = document.querySelector<HTMLElement>('#result-count')
-const cards = [...document.querySelectorAll<HTMLElement>('#resources article')]
 const normalize = (value: string) => value.normalize('NFD').replace(/\p{M}/gu, '').toLowerCase()
-const searchIndex = cards.map(card => normalize(card.dataset.search ?? ''))
 
-if (search && category && count) {
+function setupSearch(searchId: string, categoryId: string, countId: string, listId: string) {
+  const search = document.getElementById(searchId) as HTMLInputElement | null
+  const category = document.getElementById(categoryId) as HTMLSelectElement | null
+  const count = document.getElementById(countId)
+  const list = document.getElementById(listId)
+  if (!search || !category || !count || !list) return
+  const cards = [...list.querySelectorAll<HTMLElement>('[data-search]')]
+  const searchIndex = cards.map(card => normalize(card.dataset.search ?? ''))
   const filter = () => {
     const terms = normalize(search.value.trim()).split(/\s+/).filter(Boolean)
     let visible = 0
@@ -73,7 +75,24 @@ if (search && category && count) {
   category.addEventListener('change', filter)
   addEventListener('pageshow', filter)
   filter()
+  return { search, category, filter }
 }
+
+setupSearch('search', 'category', 'result-count', 'resources')
+const guideSearch = setupSearch('guide-search', 'guide-category', 'guide-count', 'guide-lessons')
+
+function openLinkedLesson() {
+  const target = document.getElementById(location.hash.slice(1))
+  if (!(target instanceof HTMLDetailsElement) || !target.classList.contains('lesson')) return
+  if (target.hidden && guideSearch) {
+    guideSearch.search.value = ''
+    guideSearch.category.value = ''
+    guideSearch.filter()
+  }
+  target.open = true
+}
+addEventListener('hashchange', openLinkedLesson)
+openLinkedLesson()
 
 const chapters = [...document.querySelectorAll<HTMLElement>('main section[id]')]
 const milestones = [...document.querySelectorAll<HTMLElement>('[data-milestone]')]
@@ -112,3 +131,37 @@ addEventListener('resize', scheduleTracking)
 addEventListener('pageshow', scheduleTracking)
 new ResizeObserver(scheduleTracking).observe(document.body)
 scheduleTracking()
+
+const gallery = document.querySelector<HTMLDialogElement>('#photo-view')
+const fullPhoto = document.querySelector<HTMLImageElement>('#photo-full')
+const photoCaption = document.querySelector<HTMLElement>('#photo-caption')
+const photoLinks = [...document.querySelectorAll<HTMLAnchorElement>('.photo-link')]
+
+if (gallery?.showModal && fullPhoto && photoCaption && photoLinks.length) {
+  let activePhoto = 0
+  const showPhoto = (index: number) => {
+    activePhoto = (index + photoLinks.length) % photoLinks.length
+    const link = photoLinks[activePhoto]
+    fullPhoto.alt = link.querySelector('img')?.alt ?? ''
+    fullPhoto.src = link.href
+    photoCaption.textContent = link.closest('figure')?.querySelector('figcaption')?.textContent ?? ''
+  }
+
+  photoLinks.forEach((link, index) => {
+    link.addEventListener('click', event => {
+      if (event.metaKey || event.ctrlKey || event.altKey || event.shiftKey) return
+      event.preventDefault()
+      showPhoto(index)
+      gallery.showModal()
+    })
+  })
+  for (const button of gallery.querySelectorAll<HTMLButtonElement>('[data-photo-step]')) {
+    button.addEventListener('click', () => showPhoto(activePhoto + Number(button.dataset.photoStep)))
+  }
+  gallery.addEventListener('keydown', event => {
+    if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+      event.preventDefault()
+      showPhoto(activePhoto + (event.key === 'ArrowLeft' ? -1 : 1))
+    }
+  })
+}

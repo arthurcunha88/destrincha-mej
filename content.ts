@@ -31,15 +31,13 @@ export const copy = {
   mission: ['Missão', 'Mission', 'Mission', 'Misión'],
   missionBody: ['Formar lideranças empreendedoras por meio da vivência empresarial, com responsabilidade pelo impacto que geram no Brasil.', 'Develop entrepreneurial leaders through hands-on enterprise experience, with responsibility for the impact they have in Brazil.', 'Former des leaders entrepreneurs par l’expérience en entreprise et les responsabiliser quant à leur impact au Brésil.', 'Formar líderes emprendedores mediante la experiencia empresarial, con responsabilidad por el impacto que generan en Brasil.'],
   vision: ['Visão', 'Vision', 'Vision', 'Visión'],
-  visionBody: ['Reunir lideranças diversas em uma rede capaz de criar soluções inovadoras em colaboração.', 'Bring diverse leaders together in a network that creates innovative solutions through collaboration.', 'Rassembler des leaders aux profils variés dans un réseau qui innove par la coopération.', 'Reunir a líderes diversos en una red capaz de crear soluciones innovadoras en colaboración.'],
+  visionBody: ['No ciclo 2025–2027, a Rede busca formar lideranças protagonistas, impulsionar o desenvolvimento sustentável em conjunto e gerar impacto no ecossistema.', 'In the 2025–2027 cycle, the network aims to develop leaders who take initiative, advance sustainable development together and create impact across the ecosystem.', 'Pour 2025–2027, le réseau veut former des leaders qui prennent des initiatives, faire avancer ensemble le développement durable et agir sur l’écosystème.', 'En el ciclo 2025–2027, la red busca formar líderes que tomen la iniciativa, impulsar juntos el desarrollo sostenible y generar impacto en el ecosistema.'],
   values: ['Valores da Rede', 'Network values', 'Valeurs du réseau', 'Valores de la red'],
   practice: ['Na prática', 'In practice', 'En pratique', 'En la práctica'],
   practiceTitle: ['O jeito DMEJ de olhar para a Rede.', 'How DMEJ looks at the network.', 'Le regard de DMEJ sur le réseau.', 'La mirada de DMEJ sobre la red.'],
   network: ['Rede na Bahia', 'Bahia network', 'Réseau de Bahia', 'Red en Bahía'],
   networkTitle: ['A Rede tem endereço.', 'The network starts locally.', 'Le réseau prend vie sur le terrain.', 'La red empieza cerca.'],
   networkIntro: ['Da execução de projetos em uma EJ à articulação estadual, conheça a rede baiana e sua conexão com a confederação nacional.', 'From delivering projects in a Junior Enterprise to coordinating across the state, explore the Bahia network and how it connects to the national confederation.', 'De la réalisation de projets au sein d’une Junior-Entreprise à la coordination régionale, découvre le réseau de Bahia et ses liens avec la confédération nationale.', 'De la ejecución de proyectos en una empresa júnior a la coordinación estatal, conoce la red de Bahía y su conexión con la confederación nacional.'],
-  networkAlt: ['Participantes circulam na entrada do ENEJ 2024 em Florianópolis.', 'Participants walk near the entrance to ENEJ 2024 in Florianópolis.', 'Des participants circulent à l’entrée de l’ENEJ 2024 à Florianópolis.', 'Participantes circulan por la entrada del ENEJ 2024 en Florianópolis.'],
-  networkNote: ['Registro do encontro nacional. A foto não identifica as organizações listadas abaixo.', 'National meeting photograph. The organizations below are not identified in this image.', 'Photo de la rencontre nationale. Les organisations ci-dessous ne sont pas identifiées sur cette image.', 'Foto del encuentro nacional. La imagen no identifica a las organizaciones de abajo.'],
   library: ['Acervo', 'Library', 'Ressources', 'Biblioteca'],
   libraryTitle: ['Leve para a próxima reunião.', 'Take it to your next meeting.', 'À emporter à ta prochaine réunion.', 'Llévalo a tu próxima reunión.'],
   libraryIntro: ['Abra as referências da Rede e use as fichas do DMEJ para sair da leitura com uma decisão, um responsável e uma forma de acompanhar.', 'Open the network’s resources and use DMEJ’s exercises to turn what you read into a decision, an owner and a way to follow up.', 'Consulte les ressources du réseau et utilise les fiches DMEJ pour déboucher sur une décision, une personne responsable et un suivi.', 'Consulta los recursos de la red y utiliza las fichas de DMEJ para convertir la lectura en una decisión, una persona responsable y una forma de seguimiento.'],
@@ -71,7 +69,6 @@ export const urls = {
   people: 'https://drive.google.com/drive/folders/11FIr2qtSJn3fKK1E2dc5S26dS3htPcWm',
   transparency: 'https://brasiljunior.org.br/portal-da-transparencia',
   photoTeam: 'https://brasiljunior.org.br/blog/employer-branding-eficaz-como-atrair-talentos-preparados-para-o-futuro',
-  photoEvent: 'https://brasiljunior.org.br/blog/a-importancia-dos-eventos-na-conexao-e-engajamento-de-publicos',
 }
 
 export type Entry = { title: Translation, body: Translation, url?: string }

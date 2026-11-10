@@ -109,6 +109,25 @@ h3{font:800 clamp(1.65rem,2.6vw,3.1rem)/1 Barlow,'Arial Narrow',Arial,sans-serif
 .practice li p{margin-bottom:0}
 .chapter-number{align-self:start;padding:.18rem .44rem;background:var(--yellow);color:var(--navy);font-weight:800;border-radius:4px}
 
+.field-guide{padding-top:0}
+.lesson-list{border-top:1px solid var(--line)}
+.guide-area:not(:has(.lesson:not([hidden]))){display:none}
+.guide-area+.guide-area{margin-top:1.75rem}
+.guide-area h3.eyebrow{margin:1rem 0 0}
+.lesson{border-bottom:1px solid var(--line)}
+.lesson summary{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:clamp(.7rem,2vw,1.5rem);padding:1.05rem .3rem;list-style:none}
+.lesson summary::-webkit-details-marker{display:none}
+.lesson summary > span:nth-child(2){font:800 clamp(1.6rem,3vw,2.75rem)/1 Barlow,Arial,sans-serif}
+.lesson summary::after{content:'+';color:var(--accent);font-size:1.5rem;font-weight:700}
+.lesson[open] summary::after{content:'−'}
+.lesson summary:hover{color:var(--accent)}
+.lesson-body{display:grid;grid-template-columns:1.15fr 1fr;gap:1rem 2rem;padding:0 .3rem 1.5rem 3.6rem;animation:enter .32s var(--ease) both}
+.lesson-body>p{color:var(--muted)}
+.lesson-body aside{background:var(--panel);border-inline-start:4px solid var(--yellow);padding:.7rem 1rem}
+.lesson-body a,.event-list a{color:var(--accent);font-weight:700;font-size:.84rem}
+.lesson-body a{justify-self:start}
+.lesson-body .lesson-formula{grid-column:1/-1;padding:.65rem .8rem;background:var(--panel);border:1px solid var(--line);color:var(--text);font-weight:700}
+
 .network{background:var(--panel);border-block:1px solid var(--line)}
 .network-top{display:grid;grid-template-columns:.8fr 1.2fr;gap:clamp(2rem,6vw,7rem);align-items:center}
 .network-top h2{margin-bottom:1rem}
@@ -119,6 +138,38 @@ h3{font:800 clamp(1.65rem,2.6vw,3.1rem)/1 Barlow,'Arial Narrow',Arial,sans-serif
 .organizations article+article{border-left:1px solid var(--line);padding-left:1.15rem}
 .organizations h3{font-size:clamp(1.7rem,3vw,3.15rem)}
 .organizations article>p:not(.eyebrow){margin:.65rem 0;color:var(--muted)}
+.national-references{margin-top:clamp(3.2rem,7vw,6rem)}
+.national-references>p{max-width:67ch;color:var(--muted);margin-top:.75rem}
+.national-references .organizations{margin-top:1.4rem}
+.national-references h4{font:800 clamp(1.7rem,3vw,3rem)/1 Barlow,Arial,sans-serif;margin:0}
+
+.event-chapter{background:var(--panel);border-bottom:1px solid var(--line)}
+.event-list{display:grid;grid-template-columns:1fr 1fr;gap:0 2rem;border-top:1px solid var(--line)}
+.event-list article{border-bottom:1px solid var(--line);padding:1.4rem 0}
+.event-list article:first-child{grid-column:1/-1;padding-inline:clamp(.85rem,3vw,2.25rem);background:var(--navy);color:#fff}
+.event-list article:last-child:nth-child(even){grid-column:1/-1}
+.event-list article:first-child a{color:var(--yellow)}
+.event-list article:first-child p{color:#e1e8f5}
+.event-list article p{margin:.6rem 0;color:var(--muted);max-width:65ch}
+.gallery-head{margin:clamp(3rem,7vw,6rem) 0 1.45rem}
+.gallery-head p{margin-top:.55rem;color:var(--muted)}
+.photo-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.5rem 1rem}
+.photo-grid figure:first-child{grid-column:span 2}
+.photo-link{position:relative;display:block;overflow:hidden;background:var(--navy);border-radius:4px}
+.photo-link img{width:100%;height:clamp(12rem,23vw,21rem);object-fit:cover;transition:transform .42s var(--ease)}
+.photo-link:hover img{transform:scale(1.045)}
+.photo-link span{position:absolute;bottom:.6rem;right:.6rem;display:grid;place-items:center;width:2rem;height:2rem;border-radius:50%;background:var(--yellow);color:var(--navy);font-weight:800}
+.photo-grid figcaption{margin-top:.4rem;color:var(--muted);font-size:.85rem;font-weight:700}
+#photo-view{width:min(70rem,calc(100% - 2rem));max-height:calc(100dvh - 2rem);padding:1rem;border:0;border-radius:10px;background:#101f3d;color:white}
+#photo-view[open]{animation:enter .24s var(--ease) both}
+#photo-view::backdrop{background:#101522e6}
+.photo-toolbar{display:flex;justify-content:flex-end;gap:.55rem;margin-bottom:.7rem}
+.photo-toolbar button{width:44px;height:44px;background:var(--yellow);border:0;border-radius:5px;color:var(--navy);font-weight:800;font-size:1.2rem}
+#photo-full{max-height:calc(100dvh - 10rem);width:100%;object-fit:contain}
+#photo-caption{text-align:center;margin-top:.65rem}
+.photo-credits{padding:.85rem 0;border-top:1px solid #ffffff65}
+.photo-credits summary{font-weight:800}
+.photo-credits ul{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,16rem),1fr));gap:.45rem 1.4rem;padding:0;list-style:none;font-size:.8rem;margin-top:.55rem}
 
 .filters{display:grid;grid-template-columns:2fr 1fr;gap:1rem}
 .filters label{display:grid;gap:.35rem;font-size:.86rem;font-weight:700}
@@ -163,6 +214,13 @@ h3{font:800 clamp(1.65rem,2.6vw,3.1rem)/1 Barlow,'Arial Narrow',Arial,sans-serif
   .organizations article:nth-child(3){border-left:0;padding-left:0}
   .organizations article:nth-child(n+3){border-top:1px solid var(--line)}
 }
+@media(max-width:980px){
+  .desktop-nav{display:none}
+  .mobile-menu{display:block}
+}
+@media(max-width:900px){
+  .photo-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
 @media(max-width:820px){
   :root{--header:62px}
   .frame,.nav-shell{width:calc(100% - 44px)}
@@ -183,6 +241,12 @@ h3{font:800 clamp(1.65rem,2.6vw,3.1rem)/1 Barlow,'Arial Narrow',Arial,sans-serif
   .foundation-grid{grid-template-columns:1fr 1fr}
   .foundation-grid .values{grid-column:1/-1}
   .resources{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .lesson-body{grid-template-columns:1fr;padding-inline:.3rem}
+}
+@media(max-width:540px){
+  .event-list,.photo-grid{grid-template-columns:1fr}
+  .photo-grid figure:first-child{grid-column:auto}
+  .photo-link img{height:auto;max-height:22rem;object-fit:contain}
 }
 @media(max-width:490px){
   .frame,.nav-shell{width:calc(100% - 32px)}
@@ -197,5 +261,5 @@ h3{font:800 clamp(1.65rem,2.6vw,3.1rem)/1 Barlow,'Arial Narrow',Arial,sans-serif
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}
   ::view-transition-old(root),::view-transition-new(root){animation:none}
-  .button:hover{transform:none}
+  .button:hover,.photo-link:hover img{transform:none}
 }

@@ -1,27 +1,32 @@
 import { copy, languages, languageNames, languageTags, localize, milestones, organizations, pillars, urls, values } from './content.ts'
 import type { Language } from './content.ts'
 import { resources, topics } from './resources.ts'
+import { guideCopy, guideTopics, guideUrls, lessons } from './field-guide.ts'
+import { eventCopy, events, eventPhotos, photoFiles } from './events.ts'
+import { benchmarks, operations, referenceCopy } from './operations.ts'
 
 export const localePath = (locale: Language) => locale === 'pt' ? '/' : '/' + locale + '/'
 const escape = (value: string) => value.replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[char] ?? char)
 const arrow = '<span aria-hidden="true">↗</span>'
-const chapterIds = ['historia', 'fundamentos', 'rede', 'acervo'] as const
-const chapterLabels = ['history', 'foundations', 'network', 'library'] as const
 const themeInit = "try{const t=localStorage.getItem('dmej-theme');if(t==='dark'||t==='light')document.documentElement.dataset.theme=t}catch{}"
 
 export function render(locale: Language) {
   const t = (key: keyof typeof copy) => escape(localize(locale, copy[key]))
   const tr = (value: Parameters<typeof localize>[1]) => escape(localize(locale, value))
   const lang = languageTags[locale]
-  const navigation = chapterIds.map((id, i) => `<a href="#${id}">${t(chapterLabels[i])}</a>`).join('')
+  const chapters = [
+    ['historia', t('history')], ['fundamentos', t('foundations')], ['guia', tr(guideCopy.nav)],
+    ['rede', t('network')], ['eventos', tr(eventCopy.nav)], ['acervo', t('library')],
+  ]
+  const navigation = chapters.map(([id, name]) => `<a href="#${id}">${name}</a>`).join('')
   const label = (index: string, title: string) => `<p class="eyebrow"><span>${index}</span> ${title}</p>`
   const brand = `<a class="brand" href="#inicio" aria-label="DMEJ — Destrincha MEJ"><img src="/mark.svg" width="42" height="42" alt=""><span>DMEJ<small>DESTRINCHA MEJ</small></span></a>`
   const creditLink = (url: string, name: string) => `<a href="${escape(url)}">${name} ${arrow}</a>`
   const languageLinks = languages.map(code => `<a href="${localePath(code)}" lang="${languageTags[code]}" hreflang="${languageTags[code]}"${code === locale ? ' aria-current="page"' : ''}>${languageNames[code]}</a>`).join('')
-  const photos = [
-    { url: urls.photoTeam, label: t('documentary') + ' / 01' },
-    { url: urls.photoEvent, label: t('documentary') + ' / 02' },
-  ]
+  const bahia = eventPhotos[0]
+  const bahiaFiles = photoFiles(bahia)
+  const guide = [...lessons, ...operations]
+  const guideAreas = Object.entries(guideTopics)
 
   return `<!doctype html>
 <html lang="${lang}">
@@ -70,7 +75,7 @@ ${languages.map(code => `<link rel="alternate" hreflang="${languageTags[code]}" 
         <div class="photo-frame">
           <img src="/media/team-1440.jpg" srcset="/media/team-680.jpg 680w, /media/team-1440.jpg 1440w" sizes="(max-width: 820px) 92vw, 50vw" width="1440" height="810" fetchpriority="high" alt="${t('heroAlt')}">
         </div>
-        <figcaption><span>01 / DMEJ</span><a href="${urls.photoTeam}">${t('documentary')} · Brasil Júnior ${arrow}</a></figcaption>
+        <figcaption><span>01 / DMEJ</span><a href="#creditos-imagens">${t('documentary')} ${arrow}</a></figcaption>
       </figure>
     </div>
     <div class="hero-bottom frame"><a href="#historia"><span aria-hidden="true">↓</span> ${t('scroll')}</a><span>BRASIL / BAHIA <b>✳</b></span></div>
@@ -110,24 +115,93 @@ ${languages.map(code => `<link rel="alternate" hreflang="${languageTags[code]}" 
     </ol>
   </section>
 
+  <section id="guia" class="section frame field-guide">
+    <div class="section-heading">
+      <div>${label('03', tr(guideCopy.nav))}<h2>${tr(guideCopy.title)}</h2></div>
+      <p>${tr(guideCopy.intro)}</p>
+    </div>
+    <div class="filters" hidden>
+      <label>${tr(guideCopy.search)}<input type="search" id="guide-search" placeholder="${tr(guideCopy.placeholder)}" aria-controls="guide-lessons"></label>
+      <label>${tr(guideCopy.category)}<select id="guide-category" aria-controls="guide-lessons"><option value="">${t('all')}</option>${guideAreas.map(([id, name]) => `<option value="${id}">${tr(name)}</option>`).join('')}</select></label>
+    </div>
+    <p id="guide-count" class="result-count" role="status" data-label="${tr(guideCopy.found)}" data-empty="${tr(guideCopy.empty)}"></p>
+    <div class="lesson-list" id="guide-lessons">
+      ${guideAreas.map(([id, name], area) => `<div class="guide-area">
+        <h3 class="eyebrow"><span>${String(area + 1).padStart(2, '0')}</span> ${tr(name)}</h3>
+        ${guide.filter(lesson => lesson.topic === id).map((lesson, i) => `<details id="guia-${lesson.id}" class="lesson" data-topic="${id}" data-search="${tr(lesson.title)} ${tr(lesson.body)} ${tr(lesson.example)} ${tr(name)}"${area === 0 && i === 0 ? ' open' : ''}>
+          <summary><span class="chapter-number">${String(i + 1).padStart(2, '0')}</span><span>${tr(lesson.title)}</span></summary>
+          <div class="lesson-body">
+            <p>${tr(lesson.body)}</p>
+            <aside><strong>${tr(guideCopy.apply)}</strong><p>${tr(lesson.example)}</p></aside>
+            ${lesson.formula ? `<p class="lesson-formula">${tr(lesson.formula)}</p>` : ''}
+            ${creditLink(lesson.url, escape(lesson.source))}
+          </div>
+        </details>`).join('')}
+      </div>`).join('')}
+    </div>
+  </section>
+
   <section id="rede" class="network section">
     <div class="frame">
       <div class="network-top">
-        <div>${label('03', t('network'))}<h2>${t('networkTitle')}</h2><p>${t('networkIntro')}</p></div>
+        <div>${label('04', t('network'))}<h2>${t('networkTitle')}</h2><p>${t('networkIntro')}</p></div>
         <figure>
-          <img src="/media/event-1200.jpg" srcset="/media/event-680.jpg 680w, /media/event-1200.jpg 1200w" sizes="(max-width: 820px) 92vw, 45vw" width="1200" height="1162" loading="lazy" alt="${t('networkAlt')}">
-          <figcaption>${t('networkNote')} ${creditLink(urls.photoEvent, 'Brasil Júnior')}</figcaption>
+          <img src="${bahiaFiles.src}" srcset="${bahiaFiles.srcset}" sizes="(max-width: 820px) 92vw, 45vw" width="${bahia.width}" height="${bahia.height}" loading="lazy" decoding="async" alt="${tr(bahia.alt)}">
+          <figcaption>${escape(bahia.title)} · ${tr(bahia.alt)}</figcaption>
         </figure>
       </div>
       <div class="organizations">
         ${organizations.map((org, i) => `<article><p class="eyebrow"><span>0${i + 1}</span> ${tr(org.title)}</p><h3>${org.name}</h3><p>${tr(org.body)}</p>${creditLink(org.url!, org.name)}</article>`).join('')}
       </div>
+      <div id="referencias" class="national-references">
+        <h3>${tr(referenceCopy.title)}</h3><p>${tr(referenceCopy.intro)}</p>
+        <div class="organizations">
+          ${benchmarks.map(item => `<article><p class="eyebrow">${tr(item.scope)}</p><h4>${escape(item.name)}</h4><p>${tr(item.body)}</p>${creditLink(item.url, t('source'))}</article>`).join('')}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="eventos" class="section event-chapter">
+    <div class="frame">
+      <div class="section-heading">
+        <div>${label('05', tr(eventCopy.nav))}<h2>${tr(eventCopy.title)}</h2></div>
+        <p>${tr(eventCopy.intro)}</p>
+      </div>
+      <div class="event-list">
+        ${events.map(event => `<article><h3>${tr(event.title)}</h3><p>${tr(event.body)}</p>${creditLink(event.url!, t('source'))}</article>`).join('')}
+      </div>
+      <div class="gallery-head">
+        <h3>${tr(eventCopy.gallery)}</h3><p>${tr(eventCopy.galleryIntro)}</p>
+      </div>
+      <div class="photo-grid">
+        ${eventPhotos.map((photo, index) => {
+          const files = photoFiles(photo)
+          const sizes = index === 0 ? '(max-width: 900px) 92vw, 64vw' : '(max-width: 540px) 92vw, (max-width: 900px) 45vw, 30vw'
+          const responsive = files.srcset ? `srcset="${files.srcset}" sizes="${sizes}"` : ''
+          return `<figure>
+            <a class="photo-link" href="${files.full}">
+              <img src="${files.src}" ${responsive} width="${photo.width}" height="${photo.height}" loading="lazy" decoding="async" alt="${tr(photo.alt)}">
+              <span aria-hidden="true">↗</span>
+            </a>
+            <figcaption>${escape(photo.title)}</figcaption>
+          </figure>`
+        }).join('')}
+      </div>
+      <dialog id="photo-view" aria-labelledby="photo-caption">
+        <div class="photo-toolbar">
+          <button type="button" data-photo-step="-1" aria-label="${tr(eventCopy.previous)}">←</button>
+          <button type="button" data-photo-step="1" aria-label="${tr(eventCopy.next)}">→</button>
+          <form method="dialog"><button type="submit" aria-label="${tr(eventCopy.close)}" autofocus>×</button></form>
+        </div>
+        <figure><img id="photo-full" alt=""><figcaption id="photo-caption" aria-live="polite"></figcaption></figure>
+      </dialog>
     </div>
   </section>
 
   <section id="acervo" class="section frame">
     <div class="section-heading">
-      <div>${label('04', t('library'))}<h2>${t('libraryTitle')}</h2></div>
+      <div>${label('06', t('library'))}<h2>${t('libraryTitle')}</h2></div>
       <p>${t('libraryIntro')}</p>
     </div>
     <div class="filters" hidden>
@@ -158,12 +232,20 @@ ${languages.map(code => `<link rel="alternate" hreflang="${languageTags[code]}" 
           <li>${creditLink(urls.history, 'Câmara dos Deputados · ' + t('history'))}</li>
           <li>${creditLink(urls.kit, 'Brasil Júnior · Kit Tudão')}</li>
           <li>${creditLink(urls.strategy, 'Brasil Júnior · PE 2025–2027')}</li>
-          ${photos.map(photo => `<li>${creditLink(photo.url, 'Brasil Júnior · ' + photo.label)}</li>`).join('')}
+          <li>${creditLink(guideUrls.clusters, 'Brasil Júnior · Fundamentos dos Clusters 4.0')}</li>
+          <li>${creditLink(guideUrls.assumptions, 'Brasil Júnior · Premissas e Fundamentos Estratégicos')}</li>
           <li>${creditLink(organizations[0].url!, 'CIMATEC Jr. · ' + t('practice'))}</li>
         </ul>
       </div>
       <div><h2>${t('author')}</h2><p>${creditLink('https://github.com/arthurcunha88', 'Arthur Andrade Cunha')}</p><p>© 2026 Arthur Andrade Cunha. ${t('rights')}</p></div>
     </div>
+    <details class="photo-credits" id="creditos-imagens" open>
+      <summary>${tr(eventCopy.photoCredits)}</summary>
+      <ul>
+        <li>${creditLink(urls.photoTeam, t('documentary') + ' · Brasil Júnior / DMEJ 01')}</li>
+        ${eventPhotos.map(photo => `<li>${creditLink(photo.url, escape(photo.title + ' · ' + photo.credit))}</li>`).join('')}
+      </ul>
+    </details>
     <a class="back" href="#inicio">${t('back')} <span aria-hidden="true">↑</span></a>
   </div>
 </footer>
