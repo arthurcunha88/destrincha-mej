@@ -30,21 +30,44 @@ export const events: Entry[] = [
     body: ['Conferência mundial das Junior Enterprises. A edição de 2026 foi realizada em colaboração entre Junior Enterprises Global, Brasil Júnior e FEJEMG.', 'The global Junior Enterprise conference. Junior Enterprises Global, Brasil Júnior and FEJEMG collaborated on the 2026 edition.', 'La conférence mondiale des Junior-Entreprises. Junior Enterprises Global, Brasil Júnior et la FEJEMG ont collaboré à l’édition 2026.', 'Conferencia mundial de las empresas júnior. Junior Enterprises Global, Brasil Júnior y FEJEMG colaboraron en la edición de 2026.'], url: 'https://www.juniorenterprises.org/pt/jewc2026' },
 ]
 
-export const eventPhotos: Photo[] = [
+export const enejPhotos: Photo[] = [
   {
-    id: 'eej-bahia', width: 1200, height: 720, title: 'MEJ · Bahia', credit: 'Gabriel Moreira · iBahia',
-    url: 'https://www.ibahia.com/salvador/empresas-juniores-promovem-workshop-gratuito-para-mulheres-negras-299060',
-    alt: ["Delegações do MEJ baiano com bandeiras, incluindo a CIMATEC Jr.","Bahia delegations with flags, including CIMATEC Jr.","Des délégations de Bahia avec leurs drapeaux, dont CIMATEC Jr.","Delegaciones de Bahía con banderas, incluida CIMATEC Jr."],
+    id: 'beaga-publico', width: 960, height: 540, title: 'Mineirinho · ENEJ 2026', credit: 'Divulgação · UFT',
+    url: 'https://www.uft.edu.br/noticias/empresas-juniores-do-tocantins-representam-a-uft-no-palco-do-enej-2026',
+    alt: ["Vista ampla da arena e do público no Mineirinho.","Wide view of the arena and audience at Mineirinho.","Vue d’ensemble de la salle et du public au Mineirinho.","Vista amplia del pabellón y el público en el Mineirinho."],
+  },
+  {
+    id: 'beaga-reconhecimento', width: 720, height: 960, title: 'Cajú · ENEJ 2026', credit: 'Divulgação · UFT',
+    url: 'https://www.uft.edu.br/noticias/empresas-juniores-do-tocantins-representam-a-uft-no-palco-do-enej-2026',
+    alt: ["Participantes seguram a bandeira da Cajú dentro do ginásio.","Participants hold Cajú’s banner inside the arena.","Des participants tiennent le drapeau de Cajú dans la salle.","Participantes sostienen la bandera de Cajú dentro del pabellón."],
+  },
+  {
+    id: 'beaga-participacao', width: 720, height: 960, title: 'AMB Jr. · ENEJ 2026', credit: 'Divulgação · UFT',
+    url: 'https://www.uft.edu.br/noticias/empresas-juniores-do-tocantins-representam-a-uft-no-palco-do-enej-2026',
+    alt: ["Dois integrantes posam com a bandeira da AMB Jr.","Two members pose with AMB Jr.’s banner.","Deux membres posent avec le drapeau d’AMB Jr.","Dos integrantes posan con la bandera de AMB Jr."],
+  },
+  {
+    id: 'beaga-jewc', width: 1040, height: 585, title: 'JEWC 2026 · Belo Horizonte', credit: 'Junior Enterprises Global',
+    url: 'https://www.juniorenterprises.org/jewc2026',
+    alt: ["Delegações exibem bandeiras no palco da conferência mundial.","Delegations display flags on the world conference stage.","Les délégations montrent leurs drapeaux sur la scène de la conférence mondiale.","Las delegaciones muestran sus banderas en el escenario de la conferencia mundial."],
+  },
+  {
+    id: 'beaga-delegacao', width: 720, height: 960, title: 'Delegação UFT · ENEJ 2026', credit: 'Divulgação · UFT',
+    url: 'https://www.uft.edu.br/noticias/empresas-juniores-do-tocantins-representam-a-uft-no-palco-do-enej-2026',
+    alt: ["Duas participantes posam com credenciais no Mineirinho.","Two participants pose with their badges at Mineirinho.","Deux participantes posent avec leurs badges au Mineirinho.","Dos participantes posan con sus credenciales en el Mineirinho."],
   },
   {
     id: 'enej-beaga', width: 960, height: 432, title: 'ENEJ 2026 · Belo Horizonte', credit: 'Divulgação · UFT',
     url: 'https://www.uft.edu.br/noticias/empresas-juniores-do-tocantins-representam-a-uft-no-palco-do-enej-2026',
     alt: ["Participantes no ginásio do Mineirinho.","Participants inside the Mineirinho arena.","Les participants dans la salle du Mineirinho.","Participantes en el pabellón Mineirinho."],
   },
+]
+
+export const eventPhotos: Photo[] = [
   {
-    id: 'cimatec-institucional', width: 441, height: 441, title: 'CIMATEC Jr. · Salvador', credit: 'CIMATEC Jr.',
-    url: 'https://cimatecjr.com.br/sobre',
-    alt: ["Dois membros da CIMATEC Jr. em uma bancada de laboratório.","Two CIMATEC Jr. members at a laboratory bench.","Deux membres de CIMATEC Jr. à une paillasse de laboratoire.","Dos integrantes de CIMATEC Jr. en una mesa de laboratorio."],
+    id: 'eej-bahia', width: 1200, height: 720, title: 'MEJ · Bahia', credit: 'Gabriel Moreira · iBahia',
+    url: 'https://www.ibahia.com/salvador/empresas-juniores-promovem-workshop-gratuito-para-mulheres-negras-299060',
+    alt: ["Delegações do MEJ baiano com bandeiras, incluindo a CIMATEC Jr.","Bahia delegations with flags, including CIMATEC Jr.","Des délégations de Bahia avec leurs drapeaux, dont CIMATEC Jr.","Delegaciones de Bahía con banderas, incluida CIMATEC Jr."],
   },
   {
     id: 'enej-rio', width: 1200, height: 800, title: 'ENEJ · Rio de Janeiro', credit: 'Gabriel Moreira / Brasil Júnior · Correio Braziliense',
@@ -75,11 +98,6 @@ export const eventPhotos: Photo[] = [
     id: 'chronos-equipe', width: 400, height: 377, title: 'Chronos Jr. · Salvador', credit: 'Acervo da Chronos Jr. · IFBA',
     url: 'https://portal.ifba.edu.br/salvador/comunicacao/noticias/2025/chronos-junior-servicos-de-engenharia-para-comunidade-e-experiencia-pratica-para-estudantes',
     alt: ["Equipe da Chronos Jr. reunida no laboratório.","The Chronos Jr. team gathers in a laboratory.","L’équipe de Chronos Jr. réunie au laboratoire.","El equipo de Chronos Jr. reunido en el laboratorio."],
-  },
-  {
-    id: 'cimatec-gestao', width: 1200, height: 1200, title: 'CIMATEC Jr. · 2025.1', credit: 'CIMATEC Jr. · LinkedIn',
-    url: 'https://pt.linkedin.com/posts/cimatecjr_gest%C3%A3odeprojetos-inova%C3%A7%C3%A3oengenharia-activity-7305528345163661313-Um79',
-    alt: ["Retrato dos gerentes dos núcleos técnicos da CIMATEC Jr.","Portrait of the CIMATEC Jr. technical team managers.","Portrait des responsables des équipes techniques de CIMATEC Jr.","Retrato de los responsables de los equipos técnicos de CIMATEC Jr."],
   },
   {
     id: 'event', width: 1200, height: 1162, title: 'ENEJ 2024 · Florianópolis', credit: 'Brasil Júnior',

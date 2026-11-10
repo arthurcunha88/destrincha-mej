@@ -94,7 +94,7 @@ function openLinkedLesson() {
 addEventListener('hashchange', openLinkedLesson)
 openLinkedLesson()
 
-const chapters = [...document.querySelectorAll<HTMLElement>('main section[id]')]
+const chapters = [...document.querySelectorAll<HTMLElement>('main > section[id]')]
 const milestones = [...document.querySelectorAll<HTMLElement>('[data-milestone]')]
 const nav = [...document.querySelectorAll<HTMLAnchorElement>('.desktop-nav a, .mobile-menu a')]
 const years = [...document.querySelectorAll<HTMLAnchorElement>('[data-year]')]
@@ -139,22 +139,25 @@ const photoLinks = [...document.querySelectorAll<HTMLAnchorElement>('.photo-link
 
 if (gallery?.showModal && fullPhoto && photoCaption && photoLinks.length) {
   let activePhoto = 0
+  let activeGroup: HTMLAnchorElement[] = []
   const showPhoto = (index: number) => {
-    activePhoto = (index + photoLinks.length) % photoLinks.length
-    const link = photoLinks[activePhoto]
+    activePhoto = (index + activeGroup.length) % activeGroup.length
+    const link = activeGroup[activePhoto]
     fullPhoto.alt = link.querySelector('img')?.alt ?? ''
     fullPhoto.src = link.href
     photoCaption.textContent = link.closest('figure')?.querySelector('figcaption')?.textContent ?? ''
   }
 
-  photoLinks.forEach((link, index) => {
+  for (const link of photoLinks) {
     link.addEventListener('click', event => {
       if (event.metaKey || event.ctrlKey || event.altKey || event.shiftKey) return
       event.preventDefault()
-      showPhoto(index)
+      const group = link.closest('[data-photo-group]')
+      activeGroup = group ? [...group.querySelectorAll<HTMLAnchorElement>('.photo-link')] : photoLinks
+      showPhoto(activeGroup.indexOf(link))
       gallery.showModal()
     })
-  })
+  }
   for (const button of gallery.querySelectorAll<HTMLButtonElement>('[data-photo-step]')) {
     button.addEventListener('click', () => showPhoto(activePhoto + Number(button.dataset.photoStep)))
   }

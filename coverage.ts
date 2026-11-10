@@ -1,0 +1,43 @@
+import type { Entry } from './content.ts'
+
+type Translation = Entry['title']
+export const coverageCopy = {
+  title: ['Quatro dias no Mineirinho.', 'Four days at Mineirinho.', 'Quatre jours au Mineirinho.', 'Cuatro días en el Mineirinho.'],
+  intro: ['De 27 a 30 de agosto de 2026, Belo Horizonte recebeu o encontro nacional e a conferência mundial JEWC. Entre o palco, as conversas de corredor e as bandeiras das delegações, cada EJ teve a chance de enxergar o próprio trabalho de outro jeito.', 'From August 27 to 30, 2026, Belo Horizonte hosted the national meeting alongside the JEWC world conference. Between the stage, hallway conversations and delegation flags, teams had a chance to see their own work differently.', 'Du 27 au 30 août 2026, Belo Horizonte a accueilli la rencontre nationale aux côtés de la conférence mondiale JEWC. Entre la scène, les échanges de couloir et les drapeaux, les équipes ont pu porter un autre regard sur leur travail.', 'Del 27 al 30 de agosto de 2026, Belo Horizonte acogió el encuentro nacional junto a la conferencia mundial JEWC. Entre el escenario, las conversaciones de pasillo y las banderas, los equipos pudieron mirar su trabajo de otra manera.'],
+  album: ['Ver fotos do ENEJ 2026', 'See ENEJ 2026 photos', 'Voir les photos de l’ENEJ 2026', 'Ver fotos del ENEJ 2026'],
+  itinerary: ['Como viver um ENEJ', 'How to make the most of ENEJ', 'Comment vivre un ENEJ', 'Cómo aprovechar un ENEJ'],
+  stories: ['O que o palco reconhece', 'What the stage recognizes', 'Ce que la scène récompense', 'Lo que reconoce el escenario'],
+  other: ['Outros encontros da Rede', 'Other network gatherings', 'Autres rencontres du réseau', 'Otros encuentros de la red'],
+  map: ['Por onde começar', 'Where to begin', 'Par où commencer', 'Por dónde empezar'],
+} satisfies Record<string, Translation>
+
+export const readingPaths = [
+  { href: '#guia-instancias', title: ['Entenda a Rede', 'Understand the network', 'Comprendre le réseau', 'Entiende la red'],
+    body: ['Quem faz o quê, da EJ à Brasil Júnior.', 'Who does what, from the local team to Brasil Júnior.', 'Qui fait quoi, de l’équipe locale à Brasil Júnior.', 'Quién hace qué, del equipo local a Brasil Júnior.'] },
+  { href: '#guia-cluster', title: ['Leia seus indicadores', 'Read your metrics', 'Lire tes indicateurs', 'Lee tus indicadores'],
+    body: ['Cluster, CSAT e decisões para a próxima reunião.', 'Clusters, CSAT and decisions for your next meeting.', 'Clusters, CSAT et décisions pour la prochaine réunion.', 'Clústeres, CSAT y decisiones para tu próxima reunión.'] },
+  { href: '#enej-2026', title: ['Entre no ENEJ 2026', 'Step inside ENEJ 2026', 'Découvrir l’ENEJ 2026', 'Entra en el ENEJ 2026'],
+    body: ['Registros de Belo Horizonte e histórias de quem subiu ao palco.', 'Photos from Belo Horizonte and stories of the teams recognized on stage.', 'Photos de Belo Horizonte et histoires des équipes distinguées.', 'Fotos de Belo Horizonte e historias de los equipos reconocidos.'] },
+] satisfies (Entry & { href: string })[]
+
+export const visitPlan: Entry[] = [
+  { title: ['Antes · leve uma pergunta', 'Before · bring a question', 'Avant · prépare une question', 'Antes · lleva una pregunta'],
+    body: ['Escolha um problema concreto da sua EJ. Se o gargalo é a entrega, leve um fluxo resumido e procure equipes que já resolveram um atraso parecido.', 'Pick a concrete problem in your team. If delivery is the bottleneck, bring a short workflow and find teams that have solved similar delays.', 'Choisis un problème concret. Si la livraison bloque, apporte un schéma du processus et cherche des équipes ayant résolu un retard comparable.', 'Elige un problema concreto. Si el cuello de botella es la entrega, lleva un flujo resumido y busca equipos que hayan resuelto retrasos parecidos.'] },
+  { title: ['Durante · compare práticas', 'During · compare practices', 'Pendant · compare les pratiques', 'Durante · compara prácticas'],
+    body: ['Em uma conversa com outra EJ, pergunte o que ela tentou primeiro, o que mediu e o que faria diferente. Registre o contexto da resposta para saber se a prática cabe na sua realidade.', 'Ask another team what it tried first, what it measured and what it would change. Note the context to see if the practice fits your team.', 'Demande à une autre équipe ce qu’elle a essayé, ce qu’elle a mesuré et ce qu’elle changerait. Note le contexte pour voir si la pratique te convient.', 'Pregunta a otro equipo qué probó primero, qué midió y qué cambiaría. Registra el contexto para saber si la práctica encaja en tu equipo.'] },
+  { title: ['Depois · transforme em teste', 'After · turn it into a test', 'Après · transforme l’idée en test', 'Después · conviértelo en una prueba'],
+    body: ['Na primeira reunião de volta, apresente uma ideia, escolha um responsável e defina o que vocês vão observar nas próximas semanas. Volte à pessoa que compartilhou a prática para contar o resultado.', 'At your first meeting back, share one idea, assign an owner and decide what to observe in the next few weeks. Tell the person who shared the practice what happened.', 'À la première réunion de retour, présente une idée, désigne un responsable et décide quoi observer les prochaines semaines. Partage le résultat avec la personne qui t’a transmis la pratique.', 'En la primera reunión al regresar, presenta una idea, asigna un responsable y decide qué observar las próximas semanas. Comparte el resultado con quien te enseñó la práctica.'] },
+]
+
+export const stageStories: (Entry & { href: string; action: Translation })[] = [
+  { title: ['CITi · colaboração em rede', 'CITi · collaboration across the network', 'CITi · collaboration en réseau', 'CITi · colaboración en red'],
+    body: ['O Centro de Informática da UFPE registrou que o CITi recebeu o reconhecimento de maior faturamento colaborativo do Nordeste. A categoria dá uma pergunta prática para levar à sua EJ: que problema de cliente pede uma entrega conjunta?', 'UFPE’s Informatics Center reported that CITi won the Northeast collaborative revenue award. The category raises a practical question for your team: which client problem calls for a joint delivery?', 'Le Centre informatique de l’UFPE indique que CITi a reçu le prix du chiffre d’affaires collaboratif du Nordeste. La catégorie pose une question pratique : quel problème client justifie une livraison commune ?', 'El Centro de Informática de la UFPE informó que CITi recibió el premio a la mayor facturación colaborativa del Nordeste. La categoría plantea una pregunta práctica: ¿qué problema del cliente requiere una entrega conjunta?'],
+    href: '#guia-colaboracao', action: ['Entender faturamento colaborativo', 'Understand collaborative revenue', 'Comprendre le chiffre d’affaires collaboratif', 'Entender la facturación colaborativa'],
+    url: 'https://portal.cin.ufpe.br/2026/09/08/citi-empresa-junior-do-cin-ufpe-conquista-titulo-de-maior-faturamento-colaborativo-do-nordeste-no-principal-encontro-de-empresas-juniores-do-brasil/',
+  },
+  { title: ['UFT · três EJs no palco', 'UFT · three teams on stage', 'UFT · trois équipes sur scène', 'UFT · tres equipos en el escenario'],
+    body: ['Segundo a UFT, Petri Jr. recebeu reconhecimento de Nível 1. AMB Jr. e Cajú receberam o de Nível 2. A distinção ajuda a abrir uma conversa sobre quais indicadores a sua equipe acompanha e quais evidências ela guarda.', 'UFT reported Level 1 recognition for Petri Jr. and Level 2 for AMB Jr. and Cajú. The distinction opens a conversation about which indicators your team tracks and what evidence it keeps.', 'L’UFT a annoncé une distinction de niveau 1 pour Petri Jr. et de niveau 2 pour AMB Jr. et Cajú. C’est l’occasion de discuter des indicateurs suivis par ton équipe et des preuves qu’elle conserve.', 'La UFT informó del reconocimiento de nivel 1 para Petri Jr. y de nivel 2 para AMB Jr. y Cajú. La distinción permite hablar de qué indicadores sigue tu equipo y qué evidencias conserva.'],
+    href: '#guia-engajamento', action: ['Entender indicadores e incentivos', 'Understand metrics and incentives', 'Comprendre les indicateurs et les incitations', 'Entender indicadores e incentivos'],
+    url: 'https://www.uft.edu.br/noticias/empresas-juniores-do-tocantins-representam-a-uft-no-palco-do-enej-2026',
+  },
+]

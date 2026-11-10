@@ -2,7 +2,8 @@ import { copy, languages, languageNames, languageTags, localize, milestones, org
 import type { Language } from './content.ts'
 import { resources, topics } from './resources.ts'
 import { guideCopy, guideTopics, guideUrls, lessons } from './field-guide.ts'
-import { eventCopy, events, eventPhotos, photoFiles } from './events.ts'
+import { enejPhotos, eventCopy, events, eventPhotos, photoFiles } from './events.ts'
+import { coverageCopy, readingPaths, stageStories, visitPlan } from './coverage.ts'
 import { benchmarks, operations, referenceCopy } from './operations.ts'
 
 export const localePath = (locale: Language) => locale === 'pt' ? '/' : '/' + locale + '/'
@@ -27,6 +28,18 @@ export function render(locale: Language) {
   const bahiaFiles = photoFiles(bahia)
   const guide = [...lessons, ...operations]
   const guideAreas = Object.entries(guideTopics)
+  const renderPhotos = (photos: typeof eventPhotos, wideIndexes = [0]) => photos.map((photo, index) => {
+    const files = photoFiles(photo)
+    const sizes = wideIndexes.includes(index) ? '(max-width: 900px) 92vw, 64vw' : '(max-width: 540px) 92vw, (max-width: 900px) 45vw, 30vw'
+    const responsive = files.srcset ? `srcset="${files.srcset}" sizes="${sizes}"` : ''
+    return `<figure>
+      <a class="photo-link" href="${files.full}">
+        <img src="${files.src}" ${responsive} width="${photo.width}" height="${photo.height}" loading="lazy" decoding="async" alt="${tr(photo.alt)}">
+        <span aria-hidden="true">↗</span>
+      </a>
+      <figcaption>${escape(photo.title)}</figcaption>
+    </figure>`
+  }).join('')
 
   return `<!doctype html>
 <html lang="${lang}">
@@ -80,6 +93,15 @@ ${languages.map(code => `<link rel="alternate" hreflang="${languageTags[code]}" 
     </div>
     <div class="hero-bottom frame"><a href="#historia"><span aria-hidden="true">↓</span> ${t('scroll')}</a><span>BRASIL / BAHIA <b>✳</b></span></div>
   </section>
+
+  <nav class="reader-map" aria-label="${tr(coverageCopy.map)}">
+    <div class="frame">
+      <p class="eyebrow">${tr(coverageCopy.map)}</p>
+      <ul>
+        ${readingPaths.map((path, index) => `<li><a href="${path.href}"><span class="path-index">0${index + 1}</span><span><strong>${tr(path.title)}</strong><small>${tr(path.body)}</small></span>${arrow}</a></li>`).join('')}
+      </ul>
+    </div>
+  </nav>
 
   <section id="historia" class="section frame">
     <div class="section-heading">
@@ -168,25 +190,34 @@ ${languages.map(code => `<link rel="alternate" hreflang="${languageTags[code]}" 
         <div>${label('05', tr(eventCopy.nav))}<h2>${tr(eventCopy.title)}</h2></div>
         <p>${tr(eventCopy.intro)}</p>
       </div>
+      <section id="enej-2026" class="coverage">
+        <div class="coverage-heading">
+          <div>${label('BH', 'ENEJ 2026')}<h3>${tr(coverageCopy.title)}</h3></div>
+          <div><p>${tr(coverageCopy.intro)}</p><a class="button" href="#fotos-enej-2026">${tr(coverageCopy.album)} <span aria-hidden="true">↓</span></a></div>
+        </div>
+        <div class="photo-grid coverage-photos" id="fotos-enej-2026" data-photo-group>
+          ${renderPhotos(enejPhotos, [0, 3])}
+        </div>
+        <div class="coverage-reading">
+          <div>
+            <h4>${tr(coverageCopy.itinerary)}</h4>
+            <ol class="visit-plan">${visitPlan.map(step => `<li><strong>${tr(step.title)}</strong><p>${tr(step.body)}</p></li>`).join('')}</ol>
+          </div>
+          <div>
+            <h4>${tr(coverageCopy.stories)}</h4>
+            ${stageStories.map(story => `<article class="stage-story"><strong>${tr(story.title)}</strong><p>${tr(story.body)}</p><div><a href="${story.href}">${tr(story.action)} ${arrow}</a>${creditLink(story.url!, t('source'))}</div></article>`).join('')}
+          </div>
+        </div>
+      </section>
+      <h3 class="other-events">${tr(coverageCopy.other)}</h3>
       <div class="event-list">
-        ${events.map(event => `<article><h3>${tr(event.title)}</h3><p>${tr(event.body)}</p>${creditLink(event.url!, t('source'))}</article>`).join('')}
+        ${events.map(event => `<article><h4>${tr(event.title)}</h4><p>${tr(event.body)}</p>${creditLink(event.url!, t('source'))}</article>`).join('')}
       </div>
       <div class="gallery-head">
         <h3>${tr(eventCopy.gallery)}</h3><p>${tr(eventCopy.galleryIntro)}</p>
       </div>
-      <div class="photo-grid">
-        ${eventPhotos.map((photo, index) => {
-          const files = photoFiles(photo)
-          const sizes = index === 0 ? '(max-width: 900px) 92vw, 64vw' : '(max-width: 540px) 92vw, (max-width: 900px) 45vw, 30vw'
-          const responsive = files.srcset ? `srcset="${files.srcset}" sizes="${sizes}"` : ''
-          return `<figure>
-            <a class="photo-link" href="${files.full}">
-              <img src="${files.src}" ${responsive} width="${photo.width}" height="${photo.height}" loading="lazy" decoding="async" alt="${tr(photo.alt)}">
-              <span aria-hidden="true">↗</span>
-            </a>
-            <figcaption>${escape(photo.title)}</figcaption>
-          </figure>`
-        }).join('')}
+      <div class="photo-grid" data-photo-group>
+        ${renderPhotos(eventPhotos)}
       </div>
       <dialog id="photo-view" aria-labelledby="photo-caption">
         <div class="photo-toolbar">
@@ -243,7 +274,7 @@ ${languages.map(code => `<link rel="alternate" hreflang="${languageTags[code]}" 
       <summary>${tr(eventCopy.photoCredits)}</summary>
       <ul>
         <li>${creditLink(urls.photoTeam, t('documentary') + ' · Brasil Júnior / DMEJ 01')}</li>
-        ${eventPhotos.map(photo => `<li>${creditLink(photo.url, escape(photo.title + ' · ' + photo.credit))}</li>`).join('')}
+        ${[...enejPhotos, ...eventPhotos].map(photo => `<li>${creditLink(photo.url, escape(photo.title + ' · ' + photo.credit))}</li>`).join('')}
       </ul>
     </details>
     <a class="back" href="#inicio">${t('back')} <span aria-hidden="true">↑</span></a>
