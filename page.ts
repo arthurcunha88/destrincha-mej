@@ -5,6 +5,7 @@ import { guideCopy, guidePreviews, guideTopics, guideUrls, lessons } from './fie
 import { enejPhotos, eventCopy, events, eventPhotos, photoFiles } from './events.ts'
 import { coverageCopy, stageStories, visitPlan } from './coverage.ts'
 import { benchmarks, operations, referenceCopy } from './operations.ts'
+import { cimatecReference, faqs, faqCopy, faqTopics } from './faq.ts'
 
 export const localePath = (locale: Language) => locale === 'pt' ? '/' : '/' + locale + '/'
 const escape = (value: string) => value.replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[char] ?? char)
@@ -22,7 +23,7 @@ export function render(locale: Language) {
   const tr = (value: Parameters<typeof localize>[1]) => escape(localize(locale, value))
   const lang = languageTags[locale]
   const chapters = [
-    ['historia', t('history')], ['fundamentos', t('foundations')], ['guia', tr(guideCopy.nav)],
+    ['historia', t('history')], ['fundamentos', t('foundations')], ['faq', tr(faqCopy.nav)], ['guia', tr(guideCopy.nav)],
     ['rede', t('network')], ['eventos', tr(eventCopy.nav)], ['acervo', t('library')],
   ]
   const navigation = chapters.map(([id, name]) => `<a href="#${id}">${name}</a>`).join('')
@@ -143,6 +144,37 @@ ${languages.map(code => `<link rel="alternate" hreflang="${languageTags[code]}" 
         <article><h3>${t('mission')}</h3><p>${t('missionBody')}</p></article>
         <article><h3>${t('vision')}</h3><p>${t('visionBody')}</p></article>
         <article class="values"><h3>${t('values')}</h3><ul>${values.map(value => `<li>${tr(value)}</li>`).join('')}</ul>${creditLink(urls.movement, 'Brasil Júnior')}</article>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq" class="section faq-section">
+    <div class="frame">
+      <div class="section-heading">
+        <div>${label(tr(faqCopy.nav))}<h2>${tr(faqCopy.title)}</h2></div>
+        <p>${tr(faqCopy.intro)}</p>
+      </div>
+      <div class="filters" hidden>
+        <label>${tr(faqCopy.search)}<input type="search" id="faq-search" placeholder="${tr(faqCopy.placeholder)}" aria-controls="faq-answers"></label>
+        <label>${tr(faqCopy.topic)}<select id="faq-category" aria-controls="faq-answers"><option value="">${t('all')}</option>${Object.entries(faqTopics).map(([id, name]) => `<option value="${id}">${tr(name)}</option>`).join('')}</select></label>
+      </div>
+      <p id="faq-count" class="result-count" role="status" data-label="${tr(faqCopy.found)}" data-empty="${tr(faqCopy.empty)}"></p>
+      <div id="faq-answers" class="faq-groups">
+        ${(Object.keys(faqTopics) as (keyof typeof faqTopics)[]).map(topic => `<div class="faq-group">
+          <h3>${tr(faqTopics[topic])}</h3>
+          <div class="faq-questions">
+            ${faqs.filter(item => item.topic === topic).map(item => `<details class="faq-question" id="faq-${item.id}" data-topic="${topic}" data-search="${tr(item.question)} ${item.paragraphs.map(tr).join(' ')} ${item.points?.map(tr).join(' ') ?? ''} ${tr(faqTopics[topic])}">
+              <summary>${tr(item.question)}</summary>
+              <div class="faq-answer">
+                ${item.paragraphs.map(paragraph => `<p>${tr(paragraph)}</p>`).join('')}
+                ${item.formula ? `<p class="faq-formula">${tr(item.formula)}</p>` : ''}
+                ${item.points ? `<ul>${item.points.map(point => `<li>${tr(point)}</li>`).join('')}</ul>` : ''}
+                ${item.url === cimatecReference.url ? `<p class="faq-access">${tr(faqCopy.access)}</p>` : ''}
+                <div class="faq-links">${creditLink(item.url, escape(item.source))}<a href="#faq-${item.id}">${tr(faqCopy.link)} ${arrow}</a></div>
+              </div>
+            </details>`).join('')}
+          </div>
+        </div>`).join('')}
       </div>
     </div>
   </section>
@@ -282,6 +314,8 @@ ${languages.map(code => `<link rel="alternate" hreflang="${languageTags[code]}" 
           <li>${creditLink(urls.strategy, 'Brasil Júnior · PE 2025–2027')}</li>
           <li>${creditLink(guideUrls.clusters, 'Brasil Júnior · Fundamentos dos Clusters 4.0')}</li>
           <li>${creditLink(guideUrls.assumptions, 'Brasil Júnior · Premissas e Fundamentos Estratégicos')}</li>
+          <li>${creditLink(cimatecReference.url, escape(cimatecReference.source))}</li>
+          <li>${creditLink('https://docs.google.com/document/d/18jqo7_27TemMgCpIAi5NHUJWXNoVfZm6NZhdVM6EuZA/edit', 'CIMATEC Jr. · Estatuto revisado de 2025 · art. 3º')}</li>
           <li>${creditLink(organizations[0].url!, 'CIMATEC Jr. · ' + t('practice'))}</li>
         </ul>
       </div>

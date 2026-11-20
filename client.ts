@@ -80,6 +80,21 @@ function setupSearch(searchId: string, categoryId: string, countId: string, list
 
 setupSearch('search', 'category', 'result-count', 'resources')
 const guideSearch = setupSearch('guide-search', 'guide-category', 'guide-count', 'guide-lessons')
+const faqSearch = setupSearch('faq-search', 'faq-category', 'faq-count', 'faq-answers')
+
+function revealFaqTarget() {
+  const target = document.getElementById(location.hash.slice(1))
+  if (!(target instanceof HTMLDetailsElement) || !target.classList.contains('faq-question')) return
+  if (target.hidden && faqSearch) {
+    faqSearch.search.value = ''
+    faqSearch.category.value = ''
+    faqSearch.filter()
+    target.scrollIntoView()
+  }
+  target.open = true
+}
+addEventListener('hashchange', revealFaqTarget)
+revealFaqTarget()
 
 function revealGuideTarget(hash: string) {
   const target = document.getElementById(hash.slice(1))
