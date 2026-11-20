@@ -56,9 +56,9 @@ export const resources: Resource[] = [
     ],
   },
   {
-    topic: 'operations', credit: 'DMEJ · CIMATEC Jr.',
+    topic: 'operations', credit: 'DMEJ · CIMATEC jr',
     title: ['Registre uma decisão de preço', 'Document a pricing decision', 'Consigne une décision de prix', 'Registra una decisión de precio'],
-    body: ['Ficha didática inspirada em um procedimento de pesquisa e validação de referências de mercado da CIMATEC Jr.', 'An exercise informed by CIMATEC Jr.’s approach to researching and validating market references.', 'Fiche pédagogique inspirée d’une démarche de recherche et de validation de références de marché de CIMATEC Jr.', 'Ficha didáctica inspirada en un procedimiento de búsqueda y validación de referencias de mercado de CIMATEC Jr.'],
+    body: ['Ficha didática inspirada em um procedimento de pesquisa e validação de referências de mercado da CIMATEC jr', 'An exercise informed by CIMATEC jr’s approach to researching and validating market references.', 'Fiche pédagogique inspirée d’une démarche de recherche et de validation de références de marché de CIMATEC jr', 'Ficha didáctica inspirada en un procedimiento de búsqueda y validación de referencias de mercado de CIMATEC jr'],
     steps: [
       ['Escolha um serviço e anote o escopo, as premissas e o motivo da revisão.', 'Pick a service and record its scope, assumptions and reason for review.', 'Choisis un service et note son périmètre, les hypothèses et le motif de la révision.', 'Elige un servicio y anota el alcance, los supuestos y el motivo de la revisión.'],
       ['Reúna referências comparáveis e explicite diferenças de escopo ou prazo.', 'Gather comparable references and spell out differences in scope or timing.', 'Rassemble des références comparables et précise les différences de périmètre ou de délai.', 'Reúne referencias comparables y explicita las diferencias de alcance o plazo.'],
