@@ -89,9 +89,9 @@ function revealFaqTarget() {
     faqSearch.search.value = ''
     faqSearch.category.value = ''
     faqSearch.filter()
-    target.scrollIntoView()
   }
   target.open = true
+  requestAnimationFrame(() => target.scrollIntoView({ block: 'start' }))
 }
 addEventListener('hashchange', revealFaqTarget)
 revealFaqTarget()
