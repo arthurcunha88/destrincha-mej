@@ -169,7 +169,6 @@ ${languages.map(code => `<link rel="alternate" hreflang="${languageTags[code]}" 
                 ${item.paragraphs.map(paragraph => `<p>${tr(paragraph)}</p>`).join('')}
                 ${item.formula ? `<p class="faq-formula">${tr(item.formula)}</p>` : ''}
                 ${item.points ? `<ul>${item.points.map(point => `<li>${tr(point)}</li>`).join('')}</ul>` : ''}
-                ${item.url === cimatecReference.url ? `<p class="faq-access">${tr(faqCopy.access)}</p>` : ''}
                 <div class="faq-links">${creditLink(item.url, escape(item.source))}<a href="#faq-${item.id}">${tr(faqCopy.link)} ${arrow}</a></div>
               </div>
             </details>`).join('')}
