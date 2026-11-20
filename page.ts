@@ -315,8 +315,8 @@ ${languages.map(code => `<link rel="alternate" hreflang="${languageTags[code]}" 
           <li>${creditLink(guideUrls.clusters, 'Brasil Júnior · Fundamentos dos Clusters 4.0')}</li>
           <li>${creditLink(guideUrls.assumptions, 'Brasil Júnior · Premissas e Fundamentos Estratégicos')}</li>
           <li>${creditLink(cimatecReference.url, escape(cimatecReference.source))}</li>
-          <li>${creditLink('https://docs.google.com/document/d/18jqo7_27TemMgCpIAi5NHUJWXNoVfZm6NZhdVM6EuZA/edit', 'CIMATEC Jr. · Estatuto revisado de 2025 · art. 3º')}</li>
-          <li>${creditLink(organizations[0].url!, 'CIMATEC Jr. · ' + t('practice'))}</li>
+          <li>${creditLink('https://docs.google.com/document/d/18jqo7_27TemMgCpIAi5NHUJWXNoVfZm6NZhdVM6EuZA/edit', 'CIMATEC jr · Estatuto revisado de 2025 · art. 3º')}</li>
+          <li>${creditLink(organizations[0].url!, 'CIMATEC jr · ' + t('practice'))}</li>
         </ul>
       </div>
       <div><h2>${t('author')}</h2><p>${creditLink('https://github.com/arthurcunha88', 'Arthur Andrade Cunha')}</p><p>© 2026 Arthur Andrade Cunha. ${t('rights')}</p></div>
