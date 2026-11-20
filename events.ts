@@ -67,7 +67,7 @@ export const eventPhotos: Photo[] = [
   {
     id: 'eej-bahia', width: 1200, height: 720, title: 'MEJ · Bahia', credit: 'Gabriel Moreira · iBahia',
     url: 'https://www.ibahia.com/salvador/empresas-juniores-promovem-workshop-gratuito-para-mulheres-negras-299060',
-    alt: ["Delegações do MEJ baiano com bandeiras, incluindo a CIMATEC Jr.","Bahia delegations with flags, including CIMATEC Jr.","Des délégations de Bahia avec leurs drapeaux, dont CIMATEC Jr.","Delegaciones de Bahía con banderas, incluida CIMATEC Jr."],
+    alt: ["Delegações do MEJ baiano com bandeiras, incluindo a CIMATEC jr","Bahia delegations with flags, including CIMATEC jr","Des délégations de Bahia avec leurs drapeaux, dont CIMATEC jr","Delegaciones de Bahía con banderas, incluida CIMATEC jr"],
   },
   {
     id: 'enej-rio', width: 1200, height: 800, title: 'ENEJ · Rio de Janeiro', credit: 'Gabriel Moreira / Brasil Júnior · Correio Braziliense',
